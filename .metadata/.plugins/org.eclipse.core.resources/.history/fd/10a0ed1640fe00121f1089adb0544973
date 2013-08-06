@@ -33,11 +33,10 @@ public class RetrieveDataFromSunlightLabs {
 			String response = getResponse(dataURL);
 			return response;	
 		} 
-		catch (MalformedURLException e) 
-		{
-			e.printStackTrace();
+		catch (MalformedURLException e) {
 			return null;
-		}
+			e.printStackTrace();
+		}	;
 	}
 	
 	public static String getResponse(URL url)

@@ -24,7 +24,7 @@ public class RetrieveDataFromSunlightLabs {
 	
 	static String response = "";
 	
-	public static String retrieveData(String urlString)
+	public static void retrieveData(String urlString)
 	{
 		URL dataURL;
 		try 
@@ -33,11 +33,10 @@ public class RetrieveDataFromSunlightLabs {
 			String response = getResponse(dataURL);
 			return response;	
 		} 
-		catch (MalformedURLException e) 
-		{
+		catch (MalformedURLException e) {
 			e.printStackTrace();
-			return null;
-		}
+		}	
+		//return response;
 	}
 	
 	public static String getResponse(URL url)

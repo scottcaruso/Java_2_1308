@@ -37,7 +37,7 @@ public class RetrieveDataFromSunlightLabs {
 		{
 			e.printStackTrace();
 			return null;
-		}
+		}	;
 	}
 	
 	public static String getResponse(URL url)
