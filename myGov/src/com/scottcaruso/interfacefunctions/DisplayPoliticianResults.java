@@ -12,6 +12,11 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.os.Handler;
+import android.os.Message;
+import android.os.Messenger;
+import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
@@ -22,6 +27,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.scottcaruso.datafunctions.DataRetrievalService;
 import com.scottcaruso.datafunctions.RetrieveDataFromSunlightLabs;
 import com.scottcaruso.datafunctions.SaveFavoritesLocally;
 import com.scottcaruso.mygov.MainActivity;
@@ -52,7 +58,6 @@ public class DisplayPoliticianResults {
 				
 				@Override
 				public void onClick(View v) {
-					//currentMainLayout.removeAllViews();
 					a.setContentView(com.scottcaruso.mygov.R.layout.main_screen);
 			        final EditText zipEntry = (EditText) a.findViewById(com.scottcaruso.mygov.R.id.zipcodeentry);
 			        Button searchForPolsButton = (Button) a.findViewById(com.scottcaruso.mygov.R.id.dosearchnow);
@@ -61,18 +66,9 @@ public class DisplayPoliticianResults {
 						
 						@Override
 						public void onClick(View v) {
-							Boolean connected = Connection_Verification.areWeConnected(currentMainContext);
-							if (connected)
-							{
-								String enteredZip = zipEntry.getText().toString();
-								RetrieveDataFromSunlightLabs.retrieveData("http://congress.api.sunlightfoundation.com/legislators/locate?zip="+enteredZip+"&apikey=eab4e1dfef1e467b8a25ed1eab0f7544");
-							} else
-							{
-								Toast toast = Toast.makeText(currentMainContext, "There is no connection to the internet available. Please try again later, or view saved politicians.", Toast.LENGTH_LONG);
-								toast.show();
-							}
-						}
-					});
+							MainActivity.buildClicker(zipEntry);
+					}
+			        });
 			        
 			        final Button retrieveSavedPols = (Button) a.findViewById(com.scottcaruso.mygov.R.id.retrievefavorites);
 			        retrieveSavedPols.setOnClickListener(new View.OnClickListener() {

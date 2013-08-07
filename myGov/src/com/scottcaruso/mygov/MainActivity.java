@@ -16,6 +16,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.os.Messenger;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
@@ -49,11 +50,11 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				//Verify network connection before attempting to connect to network.
-				Boolean connected = Connection_Verification.areWeConnected(MainActivity.this);
+				buildClicker(zipEntry);
+				/*Boolean connected = Connection_Verification.areWeConnected(MainActivity.this);
 				if (connected)
 				{
 					String enteredZip = zipEntry.getText().toString();
-					//RetrieveDataFromSunlightLabs.retrieveData("http://congress.api.sunlightfoundation.com/legislators/locate?zip="+enteredZip+"&apikey=eab4e1dfef1e467b8a25ed1eab0f7544");
 					Handler retrievalHandler = new Handler()
 					{
 
@@ -87,15 +88,14 @@ public class MainActivity extends Activity {
 					startDataService.putExtra(DataRetrievalService.ZIP_KEY,enteredZip);
 					startService(startDataService);
 					
-					//Toast toast = Toast.makeText(MainActivity.this, "Retrieving data...", Toast.LENGTH_SHORT);
-					//toast.show();
-
+					Toast toast = Toast.makeText(MainActivity.this, "Retrieving data...", Toast.LENGTH_SHORT);
+					toast.show();
 				
 				} else
 				{
 					Toast toast = Toast.makeText(MainActivity.this, "There is no connection to the internet available. Please try again later, or view saved politicians.", Toast.LENGTH_LONG);
 					toast.show();
-				}
+				}*/
 			}
 		});
         
@@ -135,5 +135,54 @@ public class MainActivity extends Activity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
+	
+	public static void buildClicker(EditText zipEntry)
+	{
+		Boolean connected = Connection_Verification.areWeConnected(getCurrentContext());
+		if (connected)
+		{
+			String enteredZip = zipEntry.getText().toString();
+			Handler retrievalHandler = new Handler()
+			{
+
+				@Override
+				public void handleMessage(Message msg) 
+				{
+					if (msg.arg1 == RESULT_OK)
+					{
+						try {
+							jsonResponse = (JSONObject) msg.obj;
+						} catch (Exception e) {
+							Log.e("Error","There was a problem retrieving the json Response.");
+						}
+						if (jsonResponse == null)
+						{
+							Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "You have entered an invalid zip code. Please try again.", Toast.LENGTH_LONG);
+							toast.show();
+						} else
+						{
+							DisplayPoliticianResults.showPoliticiansInMainView(jsonResponse, false);
+						}
+					}
+				}
+				
+			};
+			
+			Messenger apiMessenger = new Messenger(retrievalHandler);
+			
+			Intent startDataService = new Intent(getCurrentContext(), DataRetrievalService.class);
+			startDataService.putExtra(DataRetrievalService.MESSENGER_KEY, apiMessenger);
+			startDataService.putExtra(DataRetrievalService.ZIP_KEY,enteredZip);
+			getCurrentContext().startService(startDataService);
+			
+			Toast toast = Toast.makeText(getCurrentContext(), "Retrieving data...", Toast.LENGTH_SHORT);
+			toast.show();
+		
+		} else
+		{
+			Toast toast = Toast.makeText(getCurrentContext(), "There is no connection to the internet available. Please try again later, or view saved politicians.", Toast.LENGTH_LONG);
+			toast.show();
+		}
+	}
     
 }

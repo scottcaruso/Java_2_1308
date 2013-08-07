@@ -9,20 +9,13 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-
-import org.json.JSONObject;
-
-import com.scottcaruso.interfacefunctions.DisplayPoliticianResults;
-import com.scottcaruso.mygov.MainActivity;
-
-import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 public class RetrieveDataFromSunlightLabs {
 
 	
 	static String response = "";
+	static BufferedInputStream bin;
 	
 	public static String retrieveData(String urlString)
 	{
@@ -46,8 +39,6 @@ public class RetrieveDataFromSunlightLabs {
 		try 
 		{
 			URLConnection connection = url.openConnection();
-			Log.e("Error", String.valueOf(connection));
-			BufferedInputStream bin = null;
 			try {
 				bin = new BufferedInputStream(connection.getInputStream());
 			} catch (Exception e) {
