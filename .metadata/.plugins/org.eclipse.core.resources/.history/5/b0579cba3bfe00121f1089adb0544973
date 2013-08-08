@@ -1,0 +1,12 @@
+package com.scottcaruso.datafunctions;
+
+import android.app.IntentService;
+
+public class DataRetrievalService extends IntentService{
+
+	public DataRetrievalService() {
+		super(name);
+		// TODO Auto-generated constructor stub
+	}
+
+}

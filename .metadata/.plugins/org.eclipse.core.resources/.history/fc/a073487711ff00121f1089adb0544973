@@ -1,0 +1,26 @@
+package com.scottcaruso.datafunctions;
+
+import java.lang.ref.WeakReference;
+
+import com.scottcaruso.mygov.MainActivity;
+
+import android.os.Handler;
+
+public class HandlerSubclass extends Handler {
+	
+	private final WeakReference<MainActivity> mActivity;
+	 
+    public HandlerSubclass(MainActivity activity) {
+      mActivity = new MainActivity<SampleActivity>(activity);
+    }
+ 
+    @Override
+    public void handleMessage(Message msg) {
+      SampleActivity activity = mActivity.get();
+      if (activity != null) {
+        // ...
+      }
+    }
+  }
+
+}

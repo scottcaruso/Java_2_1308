@@ -20,3 +20,6 @@ Command-line arguments:  -os macosx -ws cocoa -arch x86_64 -product com.android.
 
 !ENTRY com.android.ide.eclipse.adt 4 0 2013-08-04 19:06:00.210
 !MESSAGE Failed to load properties file for project 'myGov'
+
+!ENTRY org.eclipse.ui 4 4 2013-08-06 22:39:20.714
+!MESSAGE Referenced part does not exist yet: org.eclipse.ui.views.ProblemView.

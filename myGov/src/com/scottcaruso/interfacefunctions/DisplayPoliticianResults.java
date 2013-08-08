@@ -13,6 +13,7 @@ import org.json.JSONObject;
 import android.app.Activity;
 import android.content.Context;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
@@ -22,10 +23,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.scottcaruso.datafunctions.RetrieveDataFromSunlightLabs;
 import com.scottcaruso.datafunctions.SaveFavoritesLocally;
 import com.scottcaruso.mygov.MainActivity;
-import com.scottcaruso.utilities.Connection_Verification;
 
 public class DisplayPoliticianResults {
 	
@@ -52,27 +51,20 @@ public class DisplayPoliticianResults {
 				
 				@Override
 				public void onClick(View v) {
-					//currentMainLayout.removeAllViews();
 					a.setContentView(com.scottcaruso.mygov.R.layout.main_screen);
 			        final EditText zipEntry = (EditText) a.findViewById(com.scottcaruso.mygov.R.id.zipcodeentry);
-			        Button searchForPolsButton = (Button) a.findViewById(com.scottcaruso.mygov.R.id.dosearchnow);
+			        final Button searchForPolsButton = (Button) a.findViewById(com.scottcaruso.mygov.R.id.dosearchnow);
 			        
 			        searchForPolsButton.setOnClickListener(new View.OnClickListener() {
 						
 						@Override
 						public void onClick(View v) {
-							Boolean connected = Connection_Verification.areWeConnected(currentMainContext);
-							if (connected)
-							{
-								String enteredZip = zipEntry.getText().toString();
-								RetrieveDataFromSunlightLabs.retrieveData("http://congress.api.sunlightfoundation.com/legislators/locate?zip="+enteredZip+"&apikey=eab4e1dfef1e467b8a25ed1eab0f7544");
-							} else
-							{
-								Toast toast = Toast.makeText(currentMainContext, "There is no connection to the internet available. Please try again later, or view saved politicians.", Toast.LENGTH_LONG);
-								toast.show();
-							}
-						}
-					});
+							MainActivity.buildClicker(zipEntry);
+							
+							InputMethodManager imm = (InputMethodManager)MainActivity.getCurrentContext().getSystemService(Context.INPUT_METHOD_SERVICE);
+							imm.hideSoftInputFromWindow(searchForPolsButton.getWindowToken(), 0);
+					}
+			        });
 			        
 			        final Button retrieveSavedPols = (Button) a.findViewById(com.scottcaruso.mygov.R.id.retrievefavorites);
 			        retrieveSavedPols.setOnClickListener(new View.OnClickListener() {
@@ -110,6 +102,8 @@ public class DisplayPoliticianResults {
 			ArrayAdapter<String> adapter = new ArrayAdapter<String>(currentMainContext, android.R.layout.simple_spinner_item, politicianNames);
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			polName.setAdapter(adapter);
+			Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "To choose a different politician, click the name in the spinner view above.", Toast.LENGTH_LONG);
+			toast.show();
 			//Adapter that listens for which spinner item has been clicked.
 			polName.setOnItemSelectedListener(new OnItemSelectedListener() {
 
