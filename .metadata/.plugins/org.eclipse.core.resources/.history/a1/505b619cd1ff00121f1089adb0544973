@@ -50,8 +50,6 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				//Build the onClick method, Handler, Intent, etc. See the method below!
 				buildClicker(zipEntry);
-				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-				imm.hideSoftInputFromWindow(searchForPolsButton.getWindowToken(), 0);
 			}
 		});
         

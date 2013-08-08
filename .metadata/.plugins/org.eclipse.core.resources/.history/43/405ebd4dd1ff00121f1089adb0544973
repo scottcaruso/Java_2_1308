@@ -42,7 +42,7 @@ public class MainActivity extends Activity {
         
         //Create interface elements from the XML files
         final EditText zipEntry = (EditText) findViewById(R.id.zipcodeentry);
-        final Button searchForPolsButton = (Button) findViewById(R.id.dosearchnow);
+        Button searchForPolsButton = (Button) findViewById(R.id.dosearchnow);
         
         searchForPolsButton.setOnClickListener(new View.OnClickListener() {
 			
@@ -133,6 +133,9 @@ public class MainActivity extends Activity {
 			startDataService.putExtra(DataRetrievalService.MESSENGER_KEY, apiMessenger);
 			startDataService.putExtra(DataRetrievalService.ZIP_KEY,enteredZip);
 			getCurrentContext().startService(startDataService);
+			
+			Toast toast = Toast.makeText(getCurrentContext(), "Retrieving data...", Toast.LENGTH_SHORT);
+			toast.show();
 		
 		} else
 		{
