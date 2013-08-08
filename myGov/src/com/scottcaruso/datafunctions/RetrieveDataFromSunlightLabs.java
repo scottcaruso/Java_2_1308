@@ -9,35 +9,32 @@ import java.io.IOException;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLConnection;
-
-import org.json.JSONObject;
-
-import com.scottcaruso.interfacefunctions.DisplayPoliticianResults;
-import com.scottcaruso.mygov.MainActivity;
-
-import android.os.AsyncTask;
 import android.util.Log;
-import android.widget.Toast;
 
 public class RetrieveDataFromSunlightLabs {
+	
+	//This is separated into two separate functions simply to make it a little clearer what's going on for debugging.
+	//The first one is called by another class as a way to say, "Okay, here's the URL we need. Let's grab some data!"
+	//The second one is called by the first class, and it does the actual work of setting up an input stream.
 
 	
 	static String response = "";
+	static BufferedInputStream bin;
 	
-	public static void retrieveData(String urlString)
+	public static String retrieveData(String urlString)
 	{
 		URL dataURL;
 		try 
 		{
 			dataURL = new URL(urlString);
-			MakeRequest sunlightReq = new MakeRequest();
-			sunlightReq.execute(dataURL);
-			//return response;	
+			String response = getResponse(dataURL);
+			return response;	
 		} 
-		catch (MalformedURLException e) {
+		catch (MalformedURLException e) 
+		{
 			e.printStackTrace();
-		}	
-		//return response;
+			return null;
+		}
 	}
 	
 	public static String getResponse(URL url)
@@ -46,8 +43,6 @@ public class RetrieveDataFromSunlightLabs {
 		try 
 		{
 			URLConnection connection = url.openConnection();
-			Log.e("Error", String.valueOf(connection));
-			BufferedInputStream bin = null;
 			try {
 				bin = new BufferedInputStream(connection.getInputStream());
 			} catch (Exception e) {
@@ -73,36 +68,6 @@ public class RetrieveDataFromSunlightLabs {
 		}
 	
 		return response;
-	}
-	
-	private static class MakeRequest extends AsyncTask<URL, Void, String>
-	{
-		@Override
-		protected String doInBackground(URL... urls)
-		{
-			String response = "";
-			for(URL url: urls)
-			{
-				response = RetrieveDataFromSunlightLabs.getResponse(url);
-			}
-			
-			return response;
-		}
-		
-		@Override
-		protected void onPostExecute(String result)
-		{
-			JSONObject parsedObject = TurnStringIntoJSONObject.createMasterObject(result);
-			//Handle if the user has entered an unknown/invalid zip code.
-			if (parsedObject == null)
-			{
-				Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "You have entered an invalid zip code. Please try again.", Toast.LENGTH_LONG);
-				toast.show();
-			} else
-			{
-				DisplayPoliticianResults.showPoliticiansInMainView(parsedObject, false);
-			}
-		}
 	}
 		
 }

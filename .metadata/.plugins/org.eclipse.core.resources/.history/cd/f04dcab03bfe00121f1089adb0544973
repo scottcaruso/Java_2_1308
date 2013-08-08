@@ -1,0 +1,7 @@
+package com.scottcaruso.datafunctions;
+
+import android.app.IntentService;
+
+public class DataRetrievalService extends IntentService{
+
+}
