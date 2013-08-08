@@ -12,12 +12,10 @@ import android.os.Messenger;
 import android.os.RemoteException;
 import android.util.Log;
 
-//This Service Class talks to GovTrack and returns a string with relevant data about the zip code the user entered.
-
 public class DataRetrievalService extends IntentService{
 
 	public static final String MESSENGER_KEY = "messenger";
-	public static final String ZIP_KEY = "URL"; //This key is for the user's entered Zip Code. It is appended to the URL below to make the call to the GovTrack API.
+	public static final String ZIP_KEY = "URL";
 	
 	public DataRetrievalService() 
 	{
@@ -33,14 +31,13 @@ public class DataRetrievalService extends IntentService{
 		Bundle extras = intent.getExtras();
 		Messenger messenger = (Messenger) extras.get(MESSENGER_KEY);
 		String zipString = (String) extras.get(ZIP_KEY);
-		//Get a string back from SunLight labs using a custom Class housed in a different Java file.
 		String dataResponse = RetrieveDataFromSunlightLabs.retrieveData("http://congress.api.sunlightfoundation.com/legislators/locate?zip="+zipString+"&apikey=eab4e1dfef1e467b8a25ed1eab0f7544");
-		//Turn that string into a JSON-readable object, using a custom Class housed in a different Java file.
 		JSONObject parsedObject = TurnStringIntoJSONObject.createMasterObject(dataResponse);
-		
+
+		//Handle if the user has entered an unknown/invalid zip code.
 		Message message = Message.obtain();
-		message.arg1 = Activity.RESULT_OK; //Tell the MainActivity that the service worked.
-		message.obj = parsedObject; //Store the JSON Object to the Main Activity so it can do its magic.
+		message.arg1 = Activity.RESULT_OK;
+		message.obj = parsedObject;
 		
 		try 
 		{

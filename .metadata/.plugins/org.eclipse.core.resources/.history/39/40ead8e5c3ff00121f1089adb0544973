@@ -8,8 +8,6 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-//This class does exactly what it says it does - it turns the string returned from the Sunlight Labs API into a JSON Object that the rest of the application can parse.
-
 public class TurnStringIntoJSONObject {
 	
 	public static JSONObject createMasterObject(String response)

@@ -47,8 +47,53 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				//Build the onClick method, Handler, Intent, etc. See the method below!
+				//Verify network connection before attempting to connect to network.
 				buildClicker(zipEntry);
+				/*Boolean connected = Connection_Verification.areWeConnected(MainActivity.this);
+				if (connected)
+				{
+					String enteredZip = zipEntry.getText().toString();
+					Handler retrievalHandler = new Handler()
+					{
+
+						@Override
+						public void handleMessage(Message msg) 
+						{
+							if (msg.arg1 == RESULT_OK)
+							{
+								try {
+									jsonResponse = (JSONObject) msg.obj;
+								} catch (Exception e) {
+									Log.e("Error","There was a problem retrieving the json Response.");
+								}
+								if (jsonResponse == null)
+								{
+									Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "You have entered an invalid zip code. Please try again.", Toast.LENGTH_LONG);
+									toast.show();
+								} else
+								{
+									DisplayPoliticianResults.showPoliticiansInMainView(jsonResponse, false);
+								}
+							}
+						}
+						
+					};
+					
+					Messenger apiMessenger = new Messenger(retrievalHandler);
+					
+					Intent startDataService = new Intent(MainActivity.this, DataRetrievalService.class);
+					startDataService.putExtra(DataRetrievalService.MESSENGER_KEY, apiMessenger);
+					startDataService.putExtra(DataRetrievalService.ZIP_KEY,enteredZip);
+					startService(startDataService);
+					
+					Toast toast = Toast.makeText(MainActivity.this, "Retrieving data...", Toast.LENGTH_SHORT);
+					toast.show();
+				
+				} else
+				{
+					Toast toast = Toast.makeText(MainActivity.this, "There is no connection to the internet available. Please try again later, or view saved politicians.", Toast.LENGTH_LONG);
+					toast.show();
+				}*/
 			}
 		});
         
@@ -88,9 +133,6 @@ public class MainActivity extends Activity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-	
-	
-	//Because there is so much going on here - and because we need to recreate all of this when the Back button is pressed.
 	
 	public static void buildClicker(EditText zipEntry)
 	{
