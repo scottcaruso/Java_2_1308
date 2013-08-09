@@ -12,6 +12,7 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
@@ -44,6 +45,7 @@ public class DisplayPoliticianResults {
 		final Context currentMainContext = MainActivity.getCurrentContext();
 		final Activity a = (Activity) currentMainContext;
 		try {
+			Log.i("Info","Getting a JSON Array of Politicians from the passed in JSON Object.");
 			polsToDisplay = pols.getJSONArray("Politicians");
 			a.setContentView(com.scottcaruso.mygov.R.layout.politician_display);
 			Button backButton = (Button) a.findViewById(com.scottcaruso.mygov.R.id.back);
@@ -63,6 +65,7 @@ public class DisplayPoliticianResults {
 							
 							InputMethodManager imm = (InputMethodManager)MainActivity.getCurrentContext().getSystemService(Context.INPUT_METHOD_SERVICE);
 							imm.hideSoftInputFromWindow(searchForPolsButton.getWindowToken(), 0);
+							Log.i("Info","Hide keyboard.");
 					}
 			        });
 			        
@@ -71,12 +74,14 @@ public class DisplayPoliticianResults {
 						
 						@Override
 						public void onClick(View v) {
+							Log.i("Info","Retrieving saved politicians from local storage.");
 							String savedData;
 							try {
 								savedData = SaveFavoritesLocally.getSavedPols();
 								JSONObject savedDataObject = new JSONObject(savedData);
 								DisplayPoliticianResults.showPoliticiansInMainView(savedDataObject, true);
 							} catch (Exception e) {
+								Log.i("Info","No saved politicians found.");
 								Toast toast = Toast.makeText(currentMainContext, "There are no politicians saved to storage.", Toast.LENGTH_LONG);
 								toast.show();
 							}
@@ -211,6 +216,7 @@ public class DisplayPoliticianResults {
 	public static void setDisplayItemsBasedOnSpinner(int selectedSpinner)
 	{
 		try {
+			Log.i("Info","New item selected in spinner.");
 			JSONObject thisPol = polsToDisplay.getJSONObject(selectedSpinner);
 			polParty.setText(thisPol.getString("Party"));
 			polState.setText(thisPol.getString("State"));
