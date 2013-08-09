@@ -173,7 +173,7 @@ public class SaveFavoritesLocally {
 			JSONObject newObject = new JSONObject();
 			newObject.put("Politicians", newArray);
 			newString = newObject.toString();
-			Log.i("Info","Returning the new array to display and save.");
+			Log.i("Info"."Returning the new array to display and save.");
 			return newString;
 		} catch (JSONException e) {
 			e.printStackTrace();
