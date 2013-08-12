@@ -35,6 +35,7 @@ public class DataRetrievalService extends IntentService{
 		String zipString = (String) extras.get(ZIP_KEY);
 		//Get a string back from SunLight labs using a custom Class housed in a different Java file.
 		String dataResponse = RetrieveDataFromSunlightLabs.retrieveData("http://congress.api.sunlightfoundation.com/legislators/locate?zip="+zipString+"&apikey=eab4e1dfef1e467b8a25ed1eab0f7544");
+		Log.i("Info","Response received based on "+dataResponse);
 		//Turn that string into a JSON-readable object, using a custom Class housed in a different Java file.
 		JSONObject parsedObject = TurnStringIntoJSONObject.createMasterObject(dataResponse);
 		
