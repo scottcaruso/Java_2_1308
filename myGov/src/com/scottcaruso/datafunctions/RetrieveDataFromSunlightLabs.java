@@ -24,10 +24,12 @@ public class RetrieveDataFromSunlightLabs {
 	public static String retrieveData(String urlString)
 	{
 		URL dataURL;
+		Log.i("URL","Data URL created.");
 		try 
 		{
 			dataURL = new URL(urlString);
 			String response = getResponse(dataURL);
+			Log.i("Info","Response received: " + response);
 			return response;	
 		} 
 		catch (MalformedURLException e) 
@@ -45,6 +47,7 @@ public class RetrieveDataFromSunlightLabs {
 			URLConnection connection = url.openConnection();
 			try {
 				bin = new BufferedInputStream(connection.getInputStream());
+				Log.i("Info","Starting buffered input stream.");
 			} catch (Exception e) {
 				Log.e("Error","Failed at BufferedInputStream");
 				e.printStackTrace();
@@ -59,7 +62,7 @@ public class RetrieveDataFromSunlightLabs {
 				response = new String(contentBytes,0,bytesRead);
 				responseBuffer.append(response);
 			}
-			
+			Log.i("Info","Content read and response created.");
 			return responseBuffer.toString();
 		
 		} catch (IOException e) {

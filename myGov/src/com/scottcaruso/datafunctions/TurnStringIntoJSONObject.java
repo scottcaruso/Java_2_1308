@@ -8,18 +8,22 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import android.util.Log;
+
 //This class does exactly what it says it does - it turns the string returned from the Sunlight Labs API into a JSON Object that the rest of the application can parse.
 
 public class TurnStringIntoJSONObject {
 	
 	public static JSONObject createMasterObject(String response)
 	{
+		Log.i("Info","Turning the saved string into a readable JSON Object");
 		JSONObject responseObject;
 		try {
 			responseObject = new JSONObject(response);
 			JSONArray resultsArray = responseObject.getJSONArray("results");
 			if (resultsArray.length() == 0)
 			{
+				Log.i("Info","There are no results to parse.");
 				return null;
 			} else
 			{
@@ -47,6 +51,7 @@ public class TurnStringIntoJSONObject {
 					parsedPoliticianObject.put("Website", thisWebsite);
 					parsedPoliticians.put(parsedPoliticianObject);	
 				}
+				Log.i("Info","Results found and ready to return.");
 				JSONObject politicians = new JSONObject().put("Politicians", parsedPoliticians);
 				return politicians;
 			}
