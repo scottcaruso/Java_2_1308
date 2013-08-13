@@ -7,8 +7,6 @@ import android.net.Uri;
 
 public class SavedPoliticianProvider extends ContentProvider{
 
-	public static final String AUTHORITY = "com.scottcaruso.myGov.savedpoliticianprovider";
-	
 	@Override
 	public int delete(Uri uri, String selection, String[] selectionArgs) {
 		// TODO Auto-generated method stub
