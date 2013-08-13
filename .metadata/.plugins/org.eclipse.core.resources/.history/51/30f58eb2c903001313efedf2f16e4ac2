@@ -4,9 +4,7 @@ import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.MatrixCursor;
 import android.net.Uri;
-import android.os.storage.StorageManager;
 import android.provider.BaseColumns;
 
 public class SavedPoliticianProvider extends ContentProvider{
@@ -26,7 +24,7 @@ public class SavedPoliticianProvider extends ContentProvider{
 		public static final String TWITTER_COLUMN = "twitter";
 		public static final String WEBSITE_COLUMN = "website";
 		
-		public static final String[] PROJECTION = { "_Pol", NAME_COLUMN,PARTY_COLUMN,STATE_COLUMN,TERM_COLUMN,TWITTER_COLUMN,WEBSITE_COLUMN};
+		public static final String[] RESULTS = { "_Pol", NAME_COLUMN,PARTY_COLUMN,STATE_COLUMN,TERM_COLUMN,TWITTER_COLUMN,WEBSITE_COLUMN};
 	
 		private PoliticianData() {};
 	}
@@ -80,17 +78,14 @@ public class SavedPoliticianProvider extends ContentProvider{
 			String[] selectionArgs, String sortOrder) {
 		// TODO Auto-generated method stub
 		
-		MatrixCursor result = new MatrixCursor(PoliticianData.PROJECTION);
-		String JSONString = SaveFavoritesLocally.getSavedPols();
-		
-		/*switch (uriMatcher.match(uri)) 
+		switch (uriMatcher.match(uri)) 
 		{
 		case POLS:
 			return PoliticianData.CONTENT_TYPE;
 			
 		case POLS_ID:
 			return PoliticianData.CONTENT_ITEM_TYPE;
-		}*/
+		}
 		return null;
 	}
 

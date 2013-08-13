@@ -2,11 +2,8 @@ package com.scottcaruso.datafunctions;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
-import android.content.UriMatcher;
 import android.database.Cursor;
-import android.database.MatrixCursor;
 import android.net.Uri;
-import android.os.storage.StorageManager;
 import android.provider.BaseColumns;
 
 public class SavedPoliticianProvider extends ContentProvider{
@@ -25,21 +22,6 @@ public class SavedPoliticianProvider extends ContentProvider{
 		public static final String TERM_COLUMN = "term";
 		public static final String TWITTER_COLUMN = "twitter";
 		public static final String WEBSITE_COLUMN = "website";
-		
-		public static final String[] PROJECTION = { "_Pol", NAME_COLUMN,PARTY_COLUMN,STATE_COLUMN,TERM_COLUMN,TWITTER_COLUMN,WEBSITE_COLUMN};
-	
-		private PoliticianData() {};
-	}
-	
-	public static final int POLS = 1;
-	public static final int POLS_ID = 2;
-	
-	private static final UriMatcher uriMatcher = new UriMatcher(UriMatcher.NO_MATCH);
-	
-	static 
-	{
-		uriMatcher.addURI(AUTHORITY, "politicians/",POLS);
-		uriMatcher.addURI(AUTHORITY,"politicians/",POLS_ID);
 	}
 	
 	@Override
@@ -51,15 +33,6 @@ public class SavedPoliticianProvider extends ContentProvider{
 	@Override
 	public String getType(Uri uri) {
 		// TODO Auto-generated method stub
-		
-		switch (uriMatcher.match(uri)) 
-		{
-		case POLS:
-			return PoliticianData.CONTENT_TYPE;
-			
-		case POLS_ID:
-			return PoliticianData.CONTENT_ITEM_TYPE;
-		}
 		return null;
 	}
 
@@ -79,18 +52,6 @@ public class SavedPoliticianProvider extends ContentProvider{
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
 		// TODO Auto-generated method stub
-		
-		MatrixCursor result = new MatrixCursor(PoliticianData.PROJECTION);
-		String JSONString = SaveFavoritesLocally.getSavedPols();
-		
-		/*switch (uriMatcher.match(uri)) 
-		{
-		case POLS:
-			return PoliticianData.CONTENT_TYPE;
-			
-		case POLS_ID:
-			return PoliticianData.CONTENT_ITEM_TYPE;
-		}*/
 		return null;
 	}
 

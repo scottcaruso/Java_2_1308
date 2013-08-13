@@ -83,14 +83,14 @@ public class SavedPoliticianProvider extends ContentProvider{
 		MatrixCursor result = new MatrixCursor(PoliticianData.PROJECTION);
 		String JSONString = SaveFavoritesLocally.getSavedPols();
 		
-		/*switch (uriMatcher.match(uri)) 
+		switch (uriMatcher.match(uri)) 
 		{
 		case POLS:
 			return PoliticianData.CONTENT_TYPE;
 			
 		case POLS_ID:
 			return PoliticianData.CONTENT_ITEM_TYPE;
-		}*/
+		}
 		return null;
 	}
 
