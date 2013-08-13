@@ -26,7 +26,7 @@
             </intent-filter>
         </activity>
         <service android:name="com.scottcaruso.datafunctions.DataRetrievalService"></service>
-        <provider android:name="com.scottcaruso.datafunctions.SavedPoliticianProvider"></provider>
+        <provider android:name="com.scottcaruso.datafunctions.SavedPoliticianProvider" android:authorities='"com.scottcaruso.myGov.savedpoliticianprovider"' android:exported="true"></provider>
     </application>
 
 </manifest>
