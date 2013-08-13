@@ -42,7 +42,7 @@ public class SavedPoliticianProvider extends ContentProvider{
 	public int update(Uri uri, ContentValues values, String selection,
 			String[] selectionArgs) {
 		// TODO Auto-generated method stub
-		throw new UnsupportedOperationException();
+		return 0;
 	}
 
 }
