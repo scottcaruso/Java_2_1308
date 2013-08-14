@@ -85,21 +85,22 @@ public class MainActivity extends Activity {
 							   while(!thisCursor.isAfterLast())
 							   {
 								  thisObject = new JSONObject(thisCursor.getString(thisCursor.getColumnIndex("polObject")));
+							      //String data = thisCursor.getString(thisCursor.getColumnIndex("polObject"));
 							      arrayOfPols.put(thisObject);
+								  //Log.i("Cursor",data);
 							      thisCursor.moveToNext();
 							   }
 								masterObject.put("Politicians", arrayOfPols);
 						}
 					} catch (JSONException e) {
+						// TODO Auto-generated catch block
 						e.printStackTrace();
 					}
 				}
 				try {
-					//The below code has been commented out, as it is used to retrieve data saved locally to the device by directly accessing it. We are utilizing the Provider instead now.
-					
-					/*savedData = SaveFavoritesLocally.getSavedPols();
+					//savedData = SaveFavoritesLocally.getSavedPols();
 					//JSONObject savedDataObject = new JSONObject(savedData);
-					DisplayPoliticianResults.showPoliticiansInMainView(savedDataObject, true);*/
+					//DisplayPoliticianResults.showPoliticiansInMainView(savedDataObject, true);
 					DisplayPoliticianResults.showPoliticiansInMainView(masterObject, true);
 					thisCursor.close();
 				} catch (Exception e) {
