@@ -43,7 +43,7 @@ public class SavedPoliticianProvider extends ContentProvider{
 	static 
 	{
 		uriMatcher.addURI(AUTHORITY, "politicians/",POLS);
-		uriMatcher.addURI(AUTHORITY,"politicians/",POLS_ID);
+		uriMatcher.addURI(AUTHORITY,"/politicians/#",POLS_ID);
 	}
 	
 	@Override
@@ -120,7 +120,7 @@ public class SavedPoliticianProvider extends ContentProvider{
 		case POLS_ID:
 		
 		}
-		return null;
+		return result;
 	}
 
 	@Override

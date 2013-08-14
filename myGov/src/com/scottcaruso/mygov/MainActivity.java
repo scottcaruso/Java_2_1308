@@ -22,6 +22,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -68,14 +69,25 @@ public class MainActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				String savedData;
+				Uri uri = PoliticianData.CONTENT_URI;
+				Cursor thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
+				if (thisCursor != null) 
+				{
+					if (thisCursor.moveToFirst())
+					{
+						   while(!thisCursor.isAfterLast())
+						   {
+						      String data = thisCursor.getString(thisCursor.getColumnIndex("name"));
+						      Log.i("Cursor",data);
+						      thisCursor.moveToNext();
+						   }
+					}
+				}
 				try {
-					Uri uri = PoliticianData.CONTENT_URI;
-					Cursor thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
-					String cursorString = thisCursor.toString();
-					Log.i("Cursor",cursorString);
 					savedData = SaveFavoritesLocally.getSavedPols();
 					JSONObject savedDataObject = new JSONObject(savedData);
 					DisplayPoliticianResults.showPoliticiansInMainView(savedDataObject, true);
+					thisCursor.close();
 				} catch (Exception e) {
 					Toast toast = Toast.makeText(MainActivity.this, "There are no politicians saved to storage.", Toast.LENGTH_LONG);
 					toast.show();
