@@ -23,7 +23,6 @@ public class SavedPoliticianProvider extends ContentProvider{
 		public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.scaruso.mygov.politician";
 		public static final String CONTENT_ITEM_TYPE = "vnd.android.cursor.item/vnd.scaruso.mygov.politician";
 		
-		public static final String OBJECT_COLUMN = "poLObject";
 		public static final String NAME_COLUMN = "name";
 		public static final String PARTY_COLUMN = "party";
 		public static final String STATE_COLUMN = "state";
@@ -31,7 +30,7 @@ public class SavedPoliticianProvider extends ContentProvider{
 		public static final String TWITTER_COLUMN = "twitter";
 		public static final String WEBSITE_COLUMN = "website";
 		
-		public static final String[] PROJECTION = { "_id", OBJECT_COLUMN,NAME_COLUMN,PARTY_COLUMN,STATE_COLUMN,TERM_COLUMN,TWITTER_COLUMN,WEBSITE_COLUMN};
+		public static final String[] PROJECTION = { "_id", NAME_COLUMN,PARTY_COLUMN,STATE_COLUMN,TERM_COLUMN,TWITTER_COLUMN,WEBSITE_COLUMN};
 	
 		private PoliticianData() {};
 	}
@@ -110,7 +109,7 @@ public class SavedPoliticianProvider extends ContentProvider{
 			{
 				try {
 					polObject = polArray.getJSONObject(x);
-					result.addRow(new Object[] { x + 1, polObject.toString(),polObject.get("Name"), polObject.get("Party"),polObject.get("State"),polObject.get("Term Start"),polObject.get("Twitter"),polObject.get("Website")		
+					result.addRow(new Object[] { x + 1, polObject.get("Name"), polObject.get("Party"),polObject.get("State"),polObject.get("Term Start"),polObject.get("Twitter"),polObject.get("Website")		
 					});
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block

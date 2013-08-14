@@ -73,7 +73,7 @@ public class MainActivity extends Activity {
 				String savedData;
 				Uri uri = PoliticianData.CONTENT_URI;
 				Cursor thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
-				JSONObject masterObject = new JSONObject();
+				JSONObject masterObject = new JSONObect();
 				JSONArray arrayOfPols = new JSONArray();
 				JSONObject thisObject = null;
 				

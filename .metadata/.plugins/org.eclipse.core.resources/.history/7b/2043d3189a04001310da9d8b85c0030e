@@ -73,9 +73,9 @@ public class MainActivity extends Activity {
 				String savedData;
 				Uri uri = PoliticianData.CONTENT_URI;
 				Cursor thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
-				JSONObject masterObject = new JSONObject();
+				JSONObject masterObject = new JSONObect();
 				JSONArray arrayOfPols = new JSONArray();
-				JSONObject thisObject = null;
+				JSONObject thisObject = new JSONObject();
 				
 				if (thisCursor != null) 
 				{
@@ -98,10 +98,9 @@ public class MainActivity extends Activity {
 					}
 				}
 				try {
-					//savedData = SaveFavoritesLocally.getSavedPols();
-					//JSONObject savedDataObject = new JSONObject(savedData);
-					//DisplayPoliticianResults.showPoliticiansInMainView(savedDataObject, true);
-					DisplayPoliticianResults.showPoliticiansInMainView(masterObject, true);
+					savedData = SaveFavoritesLocally.getSavedPols();
+					JSONObject savedDataObject = new JSONObject(savedData);
+					DisplayPoliticianResults.showPoliticiansInMainView(savedDataObject, true);
 					thisCursor.close();
 				} catch (Exception e) {
 					Toast toast = Toast.makeText(MainActivity.this, "There are no politicians saved to storage.", Toast.LENGTH_LONG);

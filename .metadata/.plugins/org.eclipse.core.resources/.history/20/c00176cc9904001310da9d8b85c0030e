@@ -5,7 +5,6 @@
 package com.scottcaruso.mygov;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.scottcaruso.datafunctions.DataRetrievalService;
@@ -73,35 +72,29 @@ public class MainActivity extends Activity {
 				String savedData;
 				Uri uri = PoliticianData.CONTENT_URI;
 				Cursor thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
-				JSONObject masterObject = new JSONObject();
-				JSONArray arrayOfPols = new JSONArray();
-				JSONObject thisObject = null;
+				JSONObject masterObject = null;
+				JSONArray arrayOfPols = null;
+				JSONObject thisObject;
 				
 				if (thisCursor != null) 
 				{
-					try {
-						if (thisCursor.moveToFirst())
-						{
-							   while(!thisCursor.isAfterLast())
-							   {
-								  thisObject = new JSONObject(thisCursor.getString(thisCursor.getColumnIndex("polObject")));
-							      //String data = thisCursor.getString(thisCursor.getColumnIndex("polObject"));
-							      arrayOfPols.put(thisObject);
-								  //Log.i("Cursor",data);
-							      thisCursor.moveToNext();
-							   }
-								masterObject.put("Politicians", arrayOfPols);
-						}
-					} catch (JSONException e) {
-						// TODO Auto-generated catch block
-						e.printStackTrace();
+					if (thisCursor.moveToFirst())
+					{
+						   while(!thisCursor.isAfterLast())
+						   {
+							  thisObject = new JSONObject(thisCursor.getString(thisCursor.getColumnIndex("polObject")));
+						      //String data = thisCursor.getString(thisCursor.getColumnIndex("polObject"));
+						      arrayOfPols.put(thisObject);
+							  //Log.i("Cursor",data);
+						      thisCursor.moveToNext();
+						   }
+							masterObject.put("Politicians", arrayOfPols);
 					}
 				}
 				try {
-					//savedData = SaveFavoritesLocally.getSavedPols();
-					//JSONObject savedDataObject = new JSONObject(savedData);
-					//DisplayPoliticianResults.showPoliticiansInMainView(savedDataObject, true);
-					DisplayPoliticianResults.showPoliticiansInMainView(masterObject, true);
+					savedData = SaveFavoritesLocally.getSavedPols();
+					JSONObject savedDataObject = new JSONObject(savedData);
+					DisplayPoliticianResults.showPoliticiansInMainView(savedDataObject, true);
 					thisCursor.close();
 				} catch (Exception e) {
 					Toast toast = Toast.makeText(MainActivity.this, "There are no politicians saved to storage.", Toast.LENGTH_LONG);
