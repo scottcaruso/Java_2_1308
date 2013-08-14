@@ -107,20 +107,13 @@ public class SavedPoliticianProvider extends ContentProvider{
 		{
 		case POLS:
 			for (int x = 0; x < polArray.length(); x++)
-				try {
-					{
-						polObject = polArray.getJSONObject(x);
-						result.addRow(new Object[] { x + 1, polObject.get("Name"), polObject.get("Party"),polObject.get("State"),polObject.get("Term Start"),polObject.get("Twitter"),polObject.get("Website")		
-						});
-						return result;
-					}
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			{
+				polObject = polArray.getJSONObject(x);
+				result.addRow(new Object[] { });
+			}
 			
 		case POLS_ID:
-			return result;
+			return PoliticianData.CONTENT_ITEM_TYPE;
 		}
 		return null;
 	}

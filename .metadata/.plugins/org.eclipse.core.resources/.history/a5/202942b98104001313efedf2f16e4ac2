@@ -1,7 +1,6 @@
 package com.scottcaruso.datafunctions;
 
 import org.json.JSONArray;
-import org.json.JSONException;
 import org.json.JSONObject;
 
 import android.content.ContentProvider;
@@ -90,38 +89,14 @@ public class SavedPoliticianProvider extends ContentProvider{
 		JSONArray polArray = null;
 		JSONObject polObject = null;
 		
-		try {
-			masterObject = new JSONObject(JSONString);
-			polArray = masterObject.getJSONArray("Politicians");
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
-		if (polArray == null)
-		{
-			return result;
-		}
-		
-		switch (uriMatcher.match(uri)) 
+		/*switch (uriMatcher.match(uri)) 
 		{
 		case POLS:
-			for (int x = 0; x < polArray.length(); x++)
-				try {
-					{
-						polObject = polArray.getJSONObject(x);
-						result.addRow(new Object[] { x + 1, polObject.get("Name"), polObject.get("Party"),polObject.get("State"),polObject.get("Term Start"),polObject.get("Twitter"),polObject.get("Website")		
-						});
-						return result;
-					}
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
+			return PoliticianData.CONTENT_TYPE;
 			
 		case POLS_ID:
-			return result;
-		}
+			return PoliticianData.CONTENT_ITEM_TYPE;
+		}*/
 		return null;
 	}
 
