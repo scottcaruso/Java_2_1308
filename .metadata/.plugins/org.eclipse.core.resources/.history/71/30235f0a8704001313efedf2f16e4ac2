@@ -9,11 +9,9 @@ import org.json.JSONObject;
 import com.scottcaruso.datafunctions.DataRetrievalService;
 import com.scottcaruso.datafunctions.SaveFavoritesLocally;
 import com.scottcaruso.datafunctions.SavedPoliticianProvider;
-import com.scottcaruso.datafunctions.SavedPoliticianProvider.PoliticianData;
 import com.scottcaruso.interfacefunctions.DisplayPoliticianResults;
 import com.scottcaruso.utilities.Connection_Verification;
 
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -69,10 +67,7 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				String savedData;
 				try {
-					Uri uri = PoliticianData.CONTENT_URI;
-					Cursor thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
-					String cursorString = thisCursor.toString();
-					Log.i("Cursor",cursorString);
+					SavedPoliticianProvider spp = new SavedPoliticianProvider();
 					savedData = SaveFavoritesLocally.getSavedPols();
 					JSONObject savedDataObject = new JSONObject(savedData);
 					DisplayPoliticianResults.showPoliticiansInMainView(savedDataObject, true);

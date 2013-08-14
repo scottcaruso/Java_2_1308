@@ -30,7 +30,7 @@ public class SavedPoliticianProvider extends ContentProvider{
 		public static final String TWITTER_COLUMN = "twitter";
 		public static final String WEBSITE_COLUMN = "website";
 		
-		public static final String[] PROJECTION = { "_id", NAME_COLUMN,PARTY_COLUMN,STATE_COLUMN,TERM_COLUMN,TWITTER_COLUMN,WEBSITE_COLUMN};
+		public static final String[] PROJECTION = { "_Pol", NAME_COLUMN,PARTY_COLUMN,STATE_COLUMN,TERM_COLUMN,TWITTER_COLUMN,WEBSITE_COLUMN};
 	
 		private PoliticianData() {};
 	}
@@ -82,6 +82,7 @@ public class SavedPoliticianProvider extends ContentProvider{
 	@Override
 	public Cursor query(Uri uri, String[] projection, String selection,
 			String[] selectionArgs, String sortOrder) {
+		// TODO Auto-generated method stub
 		
 		MatrixCursor result = new MatrixCursor(PoliticianData.PROJECTION);
 		String JSONString = SaveFavoritesLocally.getSavedPols();

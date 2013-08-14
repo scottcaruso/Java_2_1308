@@ -70,9 +70,7 @@ public class MainActivity extends Activity {
 				String savedData;
 				try {
 					Uri uri = PoliticianData.CONTENT_URI;
-					Cursor thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
-					String cursorString = thisCursor.toString();
-					Log.i("Cursor",cursorString);
+					getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
 					savedData = SaveFavoritesLocally.getSavedPols();
 					JSONObject savedDataObject = new JSONObject(savedData);
 					DisplayPoliticianResults.showPoliticiansInMainView(savedDataObject, true);
