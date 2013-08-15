@@ -12,8 +12,6 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.view.inputmethod.InputMethodManager;
@@ -27,9 +25,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.scottcaruso.datafunctions.SaveFavoritesLocally;
-import com.scottcaruso.datafunctions.SavedPoliticianProvider.PoliticianData;
 import com.scottcaruso.mygov.MainActivity;
-import com.scottcaruso.mygov.R;
 
 public class DisplayPoliticianResults {
 	
@@ -42,7 +38,6 @@ public class DisplayPoliticianResults {
 	static JSONObject currentPolObject;
 	static Button saveAsFavorite;
 	static Button removeAsFavorite;
-	static Spinner queryChoice;
 	
 	//Meta view: this creates the view that displays politicians. It uses a Boolean to determine whether or not the user is viewing favorites or live data, so it knows whether to show the Add or Remove button.
 	public static void showPoliticiansInMainView(final JSONObject pols, Boolean favorites)
@@ -59,10 +54,8 @@ public class DisplayPoliticianResults {
 				@Override
 				public void onClick(View v) {
 					a.setContentView(com.scottcaruso.mygov.R.layout.main_screen);
-					a.recreate();
-			        /*final EditText zipEntry = (EditText) a.findViewById(com.scottcaruso.mygov.R.id.zipcodeentry);
+			        final EditText zipEntry = (EditText) a.findViewById(com.scottcaruso.mygov.R.id.zipcodeentry);
 			        final Button searchForPolsButton = (Button) a.findViewById(com.scottcaruso.mygov.R.id.dosearchnow);
-			        final Button queryButton = (Button) findViewById(R.id.partyquery);
 			        
 			        searchForPolsButton.setOnClickListener(new View.OnClickListener() {
 						
@@ -84,17 +77,16 @@ public class DisplayPoliticianResults {
 							Log.i("Info","Retrieving saved politicians from local storage.");
 							String savedData;
 							try {
-								//String savedData; //This has been commented out because it is only used when accessing data directly.
-								Uri uri = PoliticianData.CONTENT_URI;
-								Cursor thisCursor = MainActivity.getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
-								turnCursorIntoDisplay(thisCursor);
+								savedData = SaveFavoritesLocally.getSavedPols();
+								JSONObject savedDataObject = new JSONObject(savedData);
+								DisplayPoliticianResults.showPoliticiansInMainView(savedDataObject, true);
 							} catch (Exception e) {
 								Log.i("Info","No saved politicians found.");
 								Toast toast = Toast.makeText(currentMainContext, "There are no politicians saved to storage.", Toast.LENGTH_LONG);
 								toast.show();
 							}
 						}
-					});*/
+					});
 				}
 			});
 			//Assigns the elements used in the view.

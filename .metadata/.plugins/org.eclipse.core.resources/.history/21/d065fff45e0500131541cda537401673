@@ -59,8 +59,9 @@ public class DisplayPoliticianResults {
 				@Override
 				public void onClick(View v) {
 					a.setContentView(com.scottcaruso.mygov.R.layout.main_screen);
-					a.recreate();
-			        /*final EditText zipEntry = (EditText) a.findViewById(com.scottcaruso.mygov.R.id.zipcodeentry);
+					finish();
+					startActivity(getIntent());
+			        final EditText zipEntry = (EditText) a.findViewById(com.scottcaruso.mygov.R.id.zipcodeentry);
 			        final Button searchForPolsButton = (Button) a.findViewById(com.scottcaruso.mygov.R.id.dosearchnow);
 			        final Button queryButton = (Button) findViewById(R.id.partyquery);
 			        
@@ -94,7 +95,7 @@ public class DisplayPoliticianResults {
 								toast.show();
 							}
 						}
-					});*/
+					});
 				}
 			});
 			//Assigns the elements used in the view.
