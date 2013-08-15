@@ -2,8 +2,6 @@
 <qualifiedTypeNameHistroy>
 <fullyQualifiedTypeName name="android.app.IntentService"/>
 <fullyQualifiedTypeName name="com.scottcaruso.datafunctions.RetrieveDataFromSunlightLabs"/>
-<fullyQualifiedTypeName name="org.json.JSONObject"/>
-<fullyQualifiedTypeName name="com.scottcaruso.interfacefunctions.DisplayPoliticianResults"/>
 <fullyQualifiedTypeName name="android.widget.Toast"/>
 <fullyQualifiedTypeName name="android.os.Bundle"/>
 <fullyQualifiedTypeName name="android.os.Messenger"/>
@@ -18,4 +16,8 @@
 <fullyQualifiedTypeName name="android.view.inputmethod.InputMethodManager"/>
 <fullyQualifiedTypeName name="com.scottcaruso.mygov.MainActivity"/>
 <fullyQualifiedTypeName name="android.util.Log"/>
+<fullyQualifiedTypeName name="android.database.MatrixCursor"/>
+<fullyQualifiedTypeName name="org.json.JSONArray"/>
+<fullyQualifiedTypeName name="org.json.JSONObject"/>
+<fullyQualifiedTypeName name="com.scottcaruso.interfacefunctions.DisplayPoliticianResults"/>
 </qualifiedTypeNameHistroy>

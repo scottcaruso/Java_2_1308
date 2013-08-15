@@ -117,11 +117,8 @@ public class SavedPoliticianProvider extends ContentProvider{
 				try {
 					polObject = polArray.getJSONObject(x);
 					String thisParty = polObject.get("Party").toString();
-					if (thisParty.equals("R"))
-					{
-						result.addRow(new Object[] { x + 1, polObject.toString(),polObject.get("Name"), polObject.get("Party"),polObject.get("State"),polObject.get("Term Start"),polObject.get("Twitter"),polObject.get("Website")		
-						});
-					}
+					result.addRow(new Object[] { x + 1, polObject.toString(),polObject.get("Name"), polObject.get("Party"),polObject.get("State"),polObject.get("Term Start"),polObject.get("Twitter"),polObject.get("Website")		
+					});
 				} catch (JSONException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
@@ -129,21 +126,7 @@ public class SavedPoliticianProvider extends ContentProvider{
 			}
 		
 		case POLS_D:
-			for (int x = 0; x < polArray.length(); x++)
-			{
-				try {
-					polObject = polArray.getJSONObject(x);
-					String thisParty = polObject.get("Party").toString();
-					if (thisParty.equals("D"))
-					{
-						result.addRow(new Object[] { x + 1, polObject.toString(),polObject.get("Name"), polObject.get("Party"),polObject.get("State"),polObject.get("Term Start"),polObject.get("Twitter"),polObject.get("Website")		
-						});
-					}
-				} catch (JSONException e) {
-					// TODO Auto-generated catch block
-					e.printStackTrace();
-				}
-			}
+		
 		}
 		return result;
 	}

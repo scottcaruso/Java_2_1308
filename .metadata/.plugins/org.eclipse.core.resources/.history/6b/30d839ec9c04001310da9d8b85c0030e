@@ -70,7 +70,7 @@ public class MainActivity extends Activity {
 			
 			@Override
 			public void onClick(View v) {
-				//String savedData; //This has been commented out because it is only used when accessing data directly.
+				String savedData;
 				Uri uri = PoliticianData.CONTENT_URI;
 				Cursor thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
 				JSONObject masterObject = new JSONObject();
@@ -96,7 +96,6 @@ public class MainActivity extends Activity {
 				}
 				try {
 					//The below code has been commented out, as it is used to retrieve data saved locally to the device by directly accessing it. We are utilizing the Provider instead now.
-					//If you activate this code, don't forget to uncomment the savedData String above as well!!
 					
 					/*savedData = SaveFavoritesLocally.getSavedPols();
 					//JSONObject savedDataObject = new JSONObject(savedData);
