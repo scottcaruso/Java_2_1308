@@ -44,13 +44,17 @@ public class DisplayPoliticianResults {
 	static Button removeAsFavorite;
 	static Spinner queryChoice;
 	static boolean viewingDisplay = false;
+	static boolean backButtonClicked;
+	static JSONObject masterPolObject;
 
 	//Meta view: this creates the view that displays politicians. It uses a Boolean to determine whether or not the user is viewing favorites or live data, so it knows whether to show the Add or Remove button.
 	public static void showPoliticiansInMainView(final JSONObject pols, Boolean favorites)
 	{
+		backButtonClicked = false;
 		final Context currentMainContext = MainActivity.getCurrentContext();
 		final Activity a = (Activity) currentMainContext;
 		try {
+			masterPolObject = pols;
 			Log.i("Info","Getting a JSON Array of Politicians from the passed in JSON Object.");
 			polsToDisplay = pols.getJSONArray("Politicians");
 			a.setContentView(com.scottcaruso.mygov.R.layout.politician_display);
@@ -60,6 +64,7 @@ public class DisplayPoliticianResults {
 				
 				@Override
 				public void onClick(View v) {
+					backButtonClicked = true;
 					a.setContentView(com.scottcaruso.mygov.R.layout.main_screen);
 					a.recreate();
 				}
@@ -216,5 +221,12 @@ public class DisplayPoliticianResults {
 		DisplayPoliticianResults.viewingDisplay = viewingDisplay;
 	}
 
+	public static JSONObject getMasterPolObject() {
+		return masterPolObject;
+	}
+	
+	public static boolean isBackButtonClicked() {
+		return backButtonClicked;
+	}
 
 }
