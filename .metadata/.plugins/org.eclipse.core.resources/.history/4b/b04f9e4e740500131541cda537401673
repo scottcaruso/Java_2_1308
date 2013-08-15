@@ -293,7 +293,6 @@ public class MainActivity extends Activity {
 		JSONArray arrayOfPols = new JSONArray();
 		JSONObject thisObject = null;
 		
-		Log.i("Info","Parsing cursor to pull data into display.");
 		if (dataCursor != null) 
 		{
 			try 

@@ -9,6 +9,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import com.scottcaruso.datafunctions.DataRetrievalService;
+import com.scottcaruso.datafunctions.SaveFavoritesLocally;
 import com.scottcaruso.datafunctions.SavedPoliticianProvider;
 import com.scottcaruso.datafunctions.SavedPoliticianProvider.PoliticianData;
 import com.scottcaruso.interfacefunctions.DisplayPoliticianResults;
@@ -23,6 +24,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.database.MatrixCursor;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -182,31 +184,28 @@ public class MainActivity extends Activity {
 				@Override
 				public void onClick(View v) {
 					//String savedData; //This has been commented out because it is only used when accessing data directly.
-					Log.i("Info","Fetching ALL data via URI.");
 					Uri uri = PoliticianData.CONTENT_URI;
 					thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
 					turnCursorIntoDisplay(thisCursor);
-    				}
-    			});
-    	        
-    	        //Handle a spinner click
-    	        queryButton.setOnClickListener(new View.OnClickListener() {
-    				
-    				@Override
-    				public void onClick(View v) {
-    				Log.i("Info","Query clicked");
-    				if (queryChoice.getSelectedItem().toString().equals("Republicans"))
-    				{
-    					Log.i("Info","Fetching Republicans via URI");
-    					Uri uri = PoliticianData.REPUBLICAN_URI;
-    					thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
-    					turnCursorIntoDisplay(thisCursor);
-    				} else if (queryChoice.getSelectedItem().toString().equals("Democrats"))
-    				{
-    					Log.i("Info","Fetching Democrats via URI");
-    					Uri uri = PoliticianData.DEMOCRAT_URI;
-    					thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
-    					turnCursorIntoDisplay(thisCursor);
+				}
+			});
+	        
+	        //Handle a spinner click
+	        queryButton.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+				Log.i("Info","Query clicked");
+				if (queryChoice.getSelectedItem().toString().equals("Republicans"))
+				{
+					Uri uri = PoliticianData.REPUBLICAN_URI;
+					thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
+					turnCursorIntoDisplay(thisCursor);
+				} else if (queryChoice.getSelectedItem().toString().equals("Democrats"))
+				{
+					Uri uri = PoliticianData.DEMOCRAT_URI;
+					thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
+					turnCursorIntoDisplay(thisCursor);
 				} else
 				{
 					Toast toast = Toast.makeText(MainActivity.this, "There was an error making this query.", Toast.LENGTH_LONG);
@@ -293,7 +292,6 @@ public class MainActivity extends Activity {
 		JSONArray arrayOfPols = new JSONArray();
 		JSONObject thisObject = null;
 		
-		Log.i("Info","Parsing cursor to pull data into display.");
 		if (dataCursor != null) 
 		{
 			try 
