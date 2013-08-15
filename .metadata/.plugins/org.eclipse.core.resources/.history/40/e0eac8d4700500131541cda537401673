@@ -65,7 +65,6 @@ public class MainActivity extends Activity {
         	if (displayExists)
         	{
         		try {
-        			currentContext = this;
 					JSONObject savedObject = new JSONObject(savedInstanceState.getString("json object"));
 					DisplayPoliticianResults.showPoliticiansInMainView(savedObject, false);
 				} catch (JSONException e) {
