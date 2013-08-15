@@ -19,6 +19,7 @@ import android.widget.Toast;
 public class SavedPoliticianProvider extends ContentProvider{
 
 	public static final String AUTHORITY = "com.scottcaruso.myGov.savedpoliticianprovider";
+	public static String JSONString;
 	
 	public static class PoliticianData implements BaseColumns
 	{
@@ -83,7 +84,13 @@ public class SavedPoliticianProvider extends ContentProvider{
 			String[] selectionArgs, String sortOrder) {
 		
 		MatrixCursor result = new MatrixCursor(PoliticianData.PROJECTION);
-		String JSONString = SaveFavoritesLocally.getSavedPols();
+		JSONString = SaveFavoritesLocally.getSavedPols();
+		if (JSONString == null)
+		{
+			Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "There are no saved politicians to view.", Toast.LENGTH_LONG);
+			toast.show();
+			return result;
+		}
 		JSONObject masterObject = null;
 		JSONArray polArray = null;
 		JSONObject polObject = null;

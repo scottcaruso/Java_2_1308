@@ -39,15 +39,40 @@ public class MainActivity extends Activity {
 	static Context currentContext;
 	public static JSONObject jsonResponse;
 	static Spinner queryChoice;
+	public static Cursor thisCursor;
 
+	@Override
+	protected void onSaveInstanceState(Bundle savedInstanceState) {
+		boolean viewingDisplay = DisplayPoliticianResults.isViewingDisplay();
+		if (viewingDisplay)
+		{
+			savedInstanceState.putBoolean("display exists", true);
+		} else
+		{
+			savedInstanceState.putBoolean("display exists", false);
+		}
+		super.onSaveInstanceState(savedInstanceState);
+	}
+	
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        
+        DisplayPoliticianResults.setViewingDisplay(false);
         
         setContentView(R.layout.main_screen);
         
         //Allows the context to be passed across classes.
         setCurrentContext(MainActivity.this);
+        
+        if (savedInstanceState != null)
+        {
+        	boolean displayExists = savedInstanceState.getBoolean("display exists");
+        	if (displayExists)
+        	{
+        		Log.i("Info","We were viewing the display when the orientation changed.");
+        	}
+        }
         
         //Create interface elements from the XML files
         final EditText zipEntry = (EditText) findViewById(R.id.zipcodeentry);
@@ -77,7 +102,7 @@ public class MainActivity extends Activity {
 			public void onClick(View v) {
 				//String savedData; //This has been commented out because it is only used when accessing data directly.
 				Uri uri = PoliticianData.CONTENT_URI;
-				Cursor thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
+				thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
 				turnCursorIntoDisplay(thisCursor);
 			}
 		});
@@ -91,12 +116,12 @@ public class MainActivity extends Activity {
 			if (queryChoice.getSelectedItem().toString().equals("Republicans"))
 			{
 				Uri uri = PoliticianData.REPUBLICAN_URI;
-				Cursor thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
+				thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
 				turnCursorIntoDisplay(thisCursor);
 			} else if (queryChoice.getSelectedItem().toString().equals("Democrats"))
 			{
 				Uri uri = PoliticianData.DEMOCRAT_URI;
-				Cursor thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
+				thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
 				turnCursorIntoDisplay(thisCursor);
 			} else
 			{
@@ -125,7 +150,6 @@ public class MainActivity extends Activity {
         getMenuInflater().inflate(R.menu.main, menu);
         return true;
     }
-	
 	
 	//Because there is so much going on here - and because we need to recreate all of this when the Back button is pressed.
 	
@@ -200,8 +224,11 @@ public class MainActivity extends Activity {
 						masterObject.put("Politicians", arrayOfPols);
 				} else
 				{
-					Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "There are no saved " + queryChoice.getSelectedItem().toString() + " to view.", Toast.LENGTH_LONG);
-					toast.show();
+					if (SavedPoliticianProvider.JSONString != null)
+					{
+						Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "There are no saved " + queryChoice.getSelectedItem().toString() + " to view.", Toast.LENGTH_LONG);
+						toast.show();
+					}
 				}
 			} catch (JSONException e) {
 				e.printStackTrace();

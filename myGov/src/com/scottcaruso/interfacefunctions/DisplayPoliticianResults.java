@@ -43,7 +43,8 @@ public class DisplayPoliticianResults {
 	static Button saveAsFavorite;
 	static Button removeAsFavorite;
 	static Spinner queryChoice;
-	
+	static boolean viewingDisplay = false;
+
 	//Meta view: this creates the view that displays politicians. It uses a Boolean to determine whether or not the user is viewing favorites or live data, so it knows whether to show the Add or Remove button.
 	public static void showPoliticiansInMainView(final JSONObject pols, Boolean favorites)
 	{
@@ -53,6 +54,7 @@ public class DisplayPoliticianResults {
 			Log.i("Info","Getting a JSON Array of Politicians from the passed in JSON Object.");
 			polsToDisplay = pols.getJSONArray("Politicians");
 			a.setContentView(com.scottcaruso.mygov.R.layout.politician_display);
+			viewingDisplay = true;
 			Button backButton = (Button) a.findViewById(com.scottcaruso.mygov.R.id.back);
 			backButton.setOnClickListener(new View.OnClickListener() {
 				
@@ -60,41 +62,6 @@ public class DisplayPoliticianResults {
 				public void onClick(View v) {
 					a.setContentView(com.scottcaruso.mygov.R.layout.main_screen);
 					a.recreate();
-			        /*final EditText zipEntry = (EditText) a.findViewById(com.scottcaruso.mygov.R.id.zipcodeentry);
-			        final Button searchForPolsButton = (Button) a.findViewById(com.scottcaruso.mygov.R.id.dosearchnow);
-			        final Button queryButton = (Button) findViewById(R.id.partyquery);
-			        
-			        searchForPolsButton.setOnClickListener(new View.OnClickListener() {
-						
-						@Override
-						public void onClick(View v) {
-							MainActivity.buildClicker(zipEntry);
-							
-							InputMethodManager imm = (InputMethodManager)MainActivity.getCurrentContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-							imm.hideSoftInputFromWindow(searchForPolsButton.getWindowToken(), 0);
-							Log.i("Info","Hide keyboard.");
-					}
-			        });
-			        
-			        final Button retrieveSavedPols = (Button) a.findViewById(com.scottcaruso.mygov.R.id.retrievefavorites);
-			        retrieveSavedPols.setOnClickListener(new View.OnClickListener() {
-						
-						@Override
-						public void onClick(View v) {
-							Log.i("Info","Retrieving saved politicians from local storage.");
-							String savedData;
-							try {
-								//String savedData; //This has been commented out because it is only used when accessing data directly.
-								Uri uri = PoliticianData.CONTENT_URI;
-								Cursor thisCursor = MainActivity.getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
-								turnCursorIntoDisplay(thisCursor);
-							} catch (Exception e) {
-								Log.i("Info","No saved politicians found.");
-								Toast toast = Toast.makeText(currentMainContext, "There are no politicians saved to storage.", Toast.LENGTH_LONG);
-								toast.show();
-							}
-						}
-					});*/
 				}
 			});
 			//Assigns the elements used in the view.
@@ -236,5 +203,18 @@ public class DisplayPoliticianResults {
 			e.printStackTrace();
 		}
 	}
+	
+	public static JSONArray getPolsToDisplay() {
+		return polsToDisplay;
+	}
+
+	public static boolean isViewingDisplay() {
+		return viewingDisplay;
+	}
+	
+	public static void setViewingDisplay(boolean viewingDisplay) {
+		DisplayPoliticianResults.viewingDisplay = viewingDisplay;
+	}
+
 
 }
