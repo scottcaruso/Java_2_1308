@@ -6,7 +6,7 @@
     <string name="hello_world">Hello world!</string>
     <string name="enter_zip">Enter Zip</string>
     <string name="search_now">Search Now</string>
-    <string name="view_saved_politicians">View Saved Politicians</string>
+    <string name="view_saved_politicians">Retrieve All Saved Politicians</string>
     <string name="back">Back</string>
     <string name="results">Results</string>
     <string name="politician_name">Placeholder Name</string>
@@ -22,5 +22,12 @@
     <string name="website_">"Website: "</string>
     <string name="save_to_favorites">Save To Favorites</string>
     <string name="mainmenu">Main Menu Title Image</string>
+    <string name="query_by_this_field">Query By Party</string>
+    <string name="or_">Or...</string>
+    
+    <string-array name="query_array">
+		<item>Republicans</item>
+		<item>Democrats</item>
+	</string-array>
 
 </resources>

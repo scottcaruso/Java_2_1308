@@ -4,6 +4,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import com.scottcaruso.mygov.MainActivity;
+
 import android.content.ContentProvider;
 import android.content.ContentValues;
 import android.content.UriMatcher;
@@ -12,6 +14,7 @@ import android.database.MatrixCursor;
 import android.net.Uri;
 import android.os.storage.StorageManager;
 import android.provider.BaseColumns;
+import android.widget.Toast;
 
 public class SavedPoliticianProvider extends ContentProvider{
 
@@ -20,6 +23,8 @@ public class SavedPoliticianProvider extends ContentProvider{
 	public static class PoliticianData implements BaseColumns
 	{
 		public static final Uri CONTENT_URI = Uri.parse("content://" + AUTHORITY + "/politicians");
+		public static final Uri REPUBLICAN_URI = Uri.parse("content://" + AUTHORITY + "/politicians/Republicans");
+		public static final Uri DEMOCRAT_URI = Uri.parse("content://" + AUTHORITY + "/politicians/Democrats");
 		public static final String CONTENT_TYPE = "vnd.android.cursor.dir/vnd.scaruso.mygov.politician";
 		
 		public static final String OBJECT_COLUMN = "poLObject";
@@ -44,8 +49,8 @@ public class SavedPoliticianProvider extends ContentProvider{
 	static 
 	{
 		uriMatcher.addURI(AUTHORITY, "politicians/",POLS);
-		uriMatcher.addURI(AUTHORITY,"politicians/Republicans/",POLS_R);
-		uriMatcher.addURI(AUTHORITY,"politicians/Democrats/",POLS_D);
+		uriMatcher.addURI(AUTHORITY,"politicians/Republicans",POLS_R);
+		uriMatcher.addURI(AUTHORITY,"politicians/Democrats",POLS_D);
 	}
 	
 	@Override
@@ -110,7 +115,7 @@ public class SavedPoliticianProvider extends ContentProvider{
 					e.printStackTrace();
 				}
 			}
-			
+			break;
 		case POLS_R:
 			for (int x = 0; x < polArray.length(); x++)
 			{
@@ -123,11 +128,10 @@ public class SavedPoliticianProvider extends ContentProvider{
 						});
 					}
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
-		
+			break;
 		case POLS_D:
 			for (int x = 0; x < polArray.length(); x++)
 			{
@@ -140,10 +144,10 @@ public class SavedPoliticianProvider extends ContentProvider{
 						});
 					}
 				} catch (JSONException e) {
-					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
 			}
+			break;
 		}
 		return result;
 	}

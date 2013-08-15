@@ -31,12 +31,14 @@ import android.view.View;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.Spinner;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
 	
 	static Context currentContext;
 	public static JSONObject jsonResponse;
+	static Spinner queryChoice;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -50,6 +52,9 @@ public class MainActivity extends Activity {
         //Create interface elements from the XML files
         final EditText zipEntry = (EditText) findViewById(R.id.zipcodeentry);
         final Button searchForPolsButton = (Button) findViewById(R.id.dosearchnow);
+        queryChoice = (Spinner) findViewById(R.id.spinner1);
+        final Button queryButton = (Button) findViewById(R.id.partyquery);
+        
         Log.i("Info","Created Main Menu elements based on XML files.");
         
         searchForPolsButton.setOnClickListener(new View.OnClickListener() {
@@ -73,40 +78,32 @@ public class MainActivity extends Activity {
 				//String savedData; //This has been commented out because it is only used when accessing data directly.
 				Uri uri = PoliticianData.CONTENT_URI;
 				Cursor thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
-				JSONObject masterObject = new JSONObject();
-				JSONArray arrayOfPols = new JSONArray();
-				JSONObject thisObject = null;
+				turnCursorIntoDisplay(thisCursor);
+			}
+		});
+        
+        //Handle a spinner click
+        queryButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+			Log.i("Info","Query clicked");
+			if (queryChoice.getSelectedItem().toString().equals("Republicans"))
+			{
+				Uri uri = PoliticianData.REPUBLICAN_URI;
+				Cursor thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
+				turnCursorIntoDisplay(thisCursor);
+			} else if (queryChoice.getSelectedItem().toString().equals("Democrats"))
+			{
+				Uri uri = PoliticianData.DEMOCRAT_URI;
+				Cursor thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
+				turnCursorIntoDisplay(thisCursor);
+			} else
+			{
+				Toast toast = Toast.makeText(MainActivity.this, "There was an error making this query.", Toast.LENGTH_LONG);
+				toast.show();
+			}
 				
-				if (thisCursor != null) 
-				{
-					try {
-						if (thisCursor.moveToFirst())
-						{
-							   while(!thisCursor.isAfterLast())
-							   {
-								  thisObject = new JSONObject(thisCursor.getString(thisCursor.getColumnIndex("polObject")));
-							      arrayOfPols.put(thisObject);
-							      thisCursor.moveToNext();
-							   }
-								masterObject.put("Politicians", arrayOfPols);
-						}
-					} catch (JSONException e) {
-						e.printStackTrace();
-					}
-				}
-				try {
-					//The below code has been commented out, as it is used to retrieve data saved locally to the device by directly accessing it. We are utilizing the Provider instead now.
-					//If you activate this code, don't forget to uncomment the savedData String above as well!!
-					
-					/*savedData = SaveFavoritesLocally.getSavedPols();
-					//JSONObject savedDataObject = new JSONObject(savedData);
-					DisplayPoliticianResults.showPoliticiansInMainView(savedDataObject, true);*/
-					DisplayPoliticianResults.showPoliticiansInMainView(masterObject, true);
-					thisCursor.close();
-				} catch (Exception e) {
-					Toast toast = Toast.makeText(MainActivity.this, "There are no politicians saved to storage.", Toast.LENGTH_LONG);
-					toast.show();
-				}
 			}
 		});
         
@@ -178,6 +175,43 @@ public class MainActivity extends Activity {
 		{
 			Log.i("Info","No internet connection found.");
 			Toast toast = Toast.makeText(getCurrentContext(), "There is no connection to the internet available. Please try again later, or view saved politicians.", Toast.LENGTH_LONG);
+			toast.show();
+		}
+	}
+	
+	public static void turnCursorIntoDisplay(Cursor dataCursor)
+	{
+		JSONObject masterObject = new JSONObject();
+		JSONArray arrayOfPols = new JSONArray();
+		JSONObject thisObject = null;
+		
+		if (dataCursor != null) 
+		{
+			try 
+			{
+				if (dataCursor.moveToFirst())
+				{
+					   while(!dataCursor.isAfterLast())
+					   {
+						  thisObject = new JSONObject(dataCursor.getString(dataCursor.getColumnIndex("polObject")));
+					      arrayOfPols.put(thisObject);
+					      dataCursor.moveToNext();
+					   }
+						masterObject.put("Politicians", arrayOfPols);
+				} else
+				{
+					Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "There are no saved " + queryChoice.getSelectedItem().toString() + " to view.", Toast.LENGTH_LONG);
+					toast.show();
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+		}
+		try {
+			DisplayPoliticianResults.showPoliticiansInMainView(masterObject, true);
+			dataCursor.close();
+		}  catch (Exception e) {
+			Toast toast = Toast.makeText(getCurrentContext(), "There are no politicians saved to storage.", Toast.LENGTH_LONG);
 			toast.show();
 		}
 	}

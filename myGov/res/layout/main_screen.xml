@@ -3,7 +3,8 @@
     android:layout_width="wrap_content"
     android:layout_height="wrap_content"
     android:layout_gravity="center_horizontal"
-    android:orientation="vertical" >
+    android:gravity="center"
+    android:orientation="vertical" xmlns:tools="http://schemas.android.com/tools">
 
     <EditText
         android:id="@+id/zipcodeentry"
@@ -31,14 +32,45 @@
         android:layout_width="250dp"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:layout_marginTop="100dp"
+        android:layout_marginTop="35dp"
         android:gravity="center"
         android:hint="@string/view_saved_politicians" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textSize="20sp"
+        android:text="@string/or_" />
+
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal" 
+        android:layout_marginTop="15dp" >
+    
+	    <Spinner
+	        android:id="@+id/spinner1"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:textSize="20sp"
+	        tools:listitem="@android:layout/simple_spinner_item" 
+	        android:entries="@array/query_array" />
+
+	    <Button
+	        android:id="@+id/partyquery"
+	        style="@android:style/Widget.Holo.Light.Button.Inset"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:text="@string/query_by_this_field" />
+    
+    </LinearLayout>
 
     <ImageView
         android:id="@+id/imageView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_marginTop="15dp"
         android:contentDescription="@string/mainmenu"
         android:src="@drawable/mygov_logo" />
 
