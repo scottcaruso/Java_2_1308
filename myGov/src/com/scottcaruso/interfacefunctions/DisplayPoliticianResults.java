@@ -14,12 +14,10 @@ import android.app.Activity;
 import android.content.Context;
 import android.util.Log;
 import android.view.View;
-import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemSelectedListener;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
-import android.widget.EditText;
 import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -38,55 +36,31 @@ public class DisplayPoliticianResults {
 	static JSONObject currentPolObject;
 	static Button saveAsFavorite;
 	static Button removeAsFavorite;
-	
+	static Spinner queryChoice;
+	static boolean viewingDisplay = false;
+	static boolean backButtonClicked;
+	static JSONObject masterPolObject;
+
 	//Meta view: this creates the view that displays politicians. It uses a Boolean to determine whether or not the user is viewing favorites or live data, so it knows whether to show the Add or Remove button.
 	public static void showPoliticiansInMainView(final JSONObject pols, Boolean favorites)
 	{
+		backButtonClicked = false;
 		final Context currentMainContext = MainActivity.getCurrentContext();
 		final Activity a = (Activity) currentMainContext;
 		try {
+			masterPolObject = pols;
 			Log.i("Info","Getting a JSON Array of Politicians from the passed in JSON Object.");
 			polsToDisplay = pols.getJSONArray("Politicians");
 			a.setContentView(com.scottcaruso.mygov.R.layout.politician_display);
+			viewingDisplay = true;
 			Button backButton = (Button) a.findViewById(com.scottcaruso.mygov.R.id.back);
 			backButton.setOnClickListener(new View.OnClickListener() {
 				
 				@Override
 				public void onClick(View v) {
+					backButtonClicked = true;
 					a.setContentView(com.scottcaruso.mygov.R.layout.main_screen);
-			        final EditText zipEntry = (EditText) a.findViewById(com.scottcaruso.mygov.R.id.zipcodeentry);
-			        final Button searchForPolsButton = (Button) a.findViewById(com.scottcaruso.mygov.R.id.dosearchnow);
-			        
-			        searchForPolsButton.setOnClickListener(new View.OnClickListener() {
-						
-						@Override
-						public void onClick(View v) {
-							MainActivity.buildClicker(zipEntry);
-							
-							InputMethodManager imm = (InputMethodManager)MainActivity.getCurrentContext().getSystemService(Context.INPUT_METHOD_SERVICE);
-							imm.hideSoftInputFromWindow(searchForPolsButton.getWindowToken(), 0);
-							Log.i("Info","Hide keyboard.");
-					}
-			        });
-			        
-			        final Button retrieveSavedPols = (Button) a.findViewById(com.scottcaruso.mygov.R.id.retrievefavorites);
-			        retrieveSavedPols.setOnClickListener(new View.OnClickListener() {
-						
-						@Override
-						public void onClick(View v) {
-							Log.i("Info","Retrieving saved politicians from local storage.");
-							String savedData;
-							try {
-								savedData = SaveFavoritesLocally.getSavedPols();
-								JSONObject savedDataObject = new JSONObject(savedData);
-								DisplayPoliticianResults.showPoliticiansInMainView(savedDataObject, true);
-							} catch (Exception e) {
-								Log.i("Info","No saved politicians found.");
-								Toast toast = Toast.makeText(currentMainContext, "There are no politicians saved to storage.", Toast.LENGTH_LONG);
-								toast.show();
-							}
-						}
-					});
+					a.recreate();
 				}
 			});
 			//Assigns the elements used in the view.
@@ -227,6 +201,26 @@ public class DisplayPoliticianResults {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static JSONArray getPolsToDisplay() {
+		return polsToDisplay;
+	}
+
+	public static boolean isViewingDisplay() {
+		return viewingDisplay;
+	}
+	
+	public static void setViewingDisplay(boolean viewingDisplay) {
+		DisplayPoliticianResults.viewingDisplay = viewingDisplay;
+	}
+
+	public static JSONObject getMasterPolObject() {
+		return masterPolObject;
+	}
+	
+	public static boolean isBackButtonClicked() {
+		return backButtonClicked;
 	}
 
 }
