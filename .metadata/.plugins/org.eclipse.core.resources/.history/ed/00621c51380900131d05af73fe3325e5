@@ -26,8 +26,8 @@
             </intent-filter>
         </activity>
         <activity
-  			android:name="com.scottcaruso.mygov.DisplayResultsActivity"
-   			android:label="Display Results" android:logo="@drawable/mygov_logo">
+  			android:name=".ActivityClass"
+   			label="@String/nameOfStringResource">
 		</activity>
         <service android:name="com.scottcaruso.datafunctions.DataRetrievalService"></service>
         <provider android:name="com.scottcaruso.datafunctions.SavedPoliticianProvider" android:authorities='com.scottcaruso.myGov.savedpoliticianprovider' android:exported="true" tools:ignore="ExportedContentProvider"></provider>
