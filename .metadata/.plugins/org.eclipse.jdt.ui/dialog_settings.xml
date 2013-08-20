@@ -10,6 +10,20 @@
 		<item value="410" key="DIALOG_HEIGHT"/>
 		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
 	</section>
+	<section name="OverrideMethodDialog">
+		<item value="true" key="showtypes"/>
+	</section>
+	<section name="BuildPathsPropertyPage">
+		<item value="3" key="pageIndex"/>
+	</section>
+	<section name="quick_assist_proposal_size">
+	</section>
+	<section name="SourceActionDialog.methods">
+		<item value="1" key="VisibilityModifier"/>
+		<item value="false" key="Comments"/>
+		<item value="false" key="SynchronizedModifier"/>
+		<item value="false" key="FinalModifier"/>
+	</section>
 	<section name="org.eclipse.jdt.internal.ui.packageview.PackageExplorerPart">
 		<item value="true" key="group_libraries"/>
 		<item value="false" key="linkWithEditor"/>
@@ -28,27 +42,31 @@
 			<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
 		</section>
 	</section>
-	<section name="OverrideMethodDialog">
-		<item value="true" key="showtypes"/>
-	</section>
 	<section name="completion_proposal_size">
+	</section>
+	<section name="DialogBounds_AddDelegateMethodsDialog">
+		<item value="545" key="DIALOG_WIDTH"/>
+		<item value="116" key="DIALOG_Y_ORIGIN"/>
+		<item value="346" key="DIALOG_X_ORIGIN"/>
+		<item value="485" key="DIALOG_HEIGHT"/>
+		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="JavaElementSearchActions">
 	</section>
-	<section name="BuildPathsPropertyPage">
-		<item value="3" key="pageIndex"/>
-	</section>
-	<section name="quick_assist_proposal_size">
+	<section name="DialogBounds_GetterSetterTreeSelectionDialog">
+		<item value="529" key="DIALOG_WIDTH"/>
+		<item value="13" key="DIALOG_Y_ORIGIN"/>
+		<item value="354" key="DIALOG_X_ORIGIN"/>
+		<item value="639" key="DIALOG_HEIGHT"/>
+		<item value="1|Lucida Grande|11.0|0|COCOA|1|LucidaGrande" key="DIALOG_FONT_NAME"/>
 	</section>
 	<section name="NewClassWizardPage">
 		<item value="false" key="create_constructor"/>
 		<item value="false" key="create_main"/>
 		<item value="true" key="create_unimplemented"/>
 	</section>
-	<section name="SourceActionDialog.methods">
-		<item value="1" key="VisibilityModifier"/>
-		<item value="false" key="Comments"/>
-		<item value="false" key="SynchronizedModifier"/>
-		<item value="false" key="FinalModifier"/>
+	<section name="AddGetterSetterDialog">
+		<item value="false" key="RemoveFinal"/>
+		<item value="false" key="SortOrdering"/>
 	</section>
 </section>
