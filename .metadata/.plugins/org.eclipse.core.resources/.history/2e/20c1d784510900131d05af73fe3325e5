@@ -18,7 +18,6 @@ public class DisplayResultsActivity extends Activity {
 		this.setContentView(R.layout.politician_display);
 		Bundle passedData = getIntent().getExtras();
 		pols = (JSONObject) passedData.get("politicians");
-		favorites = (Boolean) passedData.getBoolean("favorites");
 		DisplayPoliticianResults.showPoliticiansInMainView(pols, favorites);
 	}
 }

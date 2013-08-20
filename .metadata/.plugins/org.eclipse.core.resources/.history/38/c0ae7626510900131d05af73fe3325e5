@@ -12,13 +12,15 @@ public class DisplayResultsActivity extends Activity {
 	JSONObject pols;
 	Boolean favorites;
 	
+	Bundle passedData = getIntent().getExtras();
+	if(data != null){
+	  String myString = data.getString("myKey");
+	}
+	
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		this.setContentView(R.layout.politician_display);
-		Bundle passedData = getIntent().getExtras();
-		pols = (JSONObject) passedData.get("politicians");
-		favorites = (Boolean) passedData.getBoolean("favorites");
 		DisplayPoliticianResults.showPoliticiansInMainView(pols, favorites);
 	}
 }
