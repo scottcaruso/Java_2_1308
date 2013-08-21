@@ -31,7 +31,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Spinner;
-import android.widget.TextView;
 import android.widget.Toast;
 
 public class MainActivity extends Activity {
@@ -227,9 +226,7 @@ public class MainActivity extends Activity {
       if (resultCode == RESULT_OK && requestCode == 0) {
         Bundle result = data.getExtras();
         String polName = result.getString("lastpolname");
-        final TextView lastPolName = (TextView) findViewById(R.id.returnPolName);
-        lastPolName.setVisibility(0);
-        lastPolName.setText("Last Politician Viewed: " + polName);
+        Log.i("Info",polName);
       }
     }
 	

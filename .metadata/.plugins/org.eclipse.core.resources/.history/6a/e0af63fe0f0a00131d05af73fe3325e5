@@ -228,8 +228,9 @@ public class MainActivity extends Activity {
         Bundle result = data.getExtras();
         String polName = result.getString("lastpolname");
         final TextView lastPolName = (TextView) findViewById(R.id.returnPolName);
-        lastPolName.setVisibility(0);
-        lastPolName.setText("Last Politician Viewed: " + polName);
+        lastPolName.VISIBLE;
+        
+        
       }
     }
 	

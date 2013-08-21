@@ -27,32 +27,33 @@ public final class R {
         public static final int mygov_logo=0x7f020002;
     }
     public static final class id {
-        public static final int action_settings=0x7f090019;
-        public static final int dosearchnow=0x7f090001;
-        public static final int foundpoliticians=0x7f090007;
-        public static final int imageView1=0x7f090006;
-        public static final int partyLayout=0x7f090009;
-        public static final int partylabel=0x7f09000a;
-        public static final int partyquery=0x7f090005;
-        public static final int partytext=0x7f09000b;
-        public static final int politicianName=0x7f090008;
-        public static final int retrievefavorites=0x7f090002;
-        public static final int savefavorite=0x7f090018;
-        public static final int spinner1=0x7f090004;
-        public static final int stateLayout=0x7f09000c;
-        public static final int statelabel=0x7f09000d;
-        public static final int statetext=0x7f09000e;
-        public static final int termLabel=0x7f090010;
-        public static final int termLayout=0x7f09000f;
-        public static final int termText=0x7f090011;
-        public static final int textView1=0x7f090003;
-        public static final int twitterLabel=0x7f090013;
-        public static final int twitterText=0x7f090014;
-        public static final int twitterlayout=0x7f090012;
-        public static final int websiteText=0x7f090017;
-        public static final int websitelabel=0x7f090016;
-        public static final int websitelayout=0x7f090015;
-        public static final int zipcodeentry=0x7f090000;
+        public static final int action_settings=0x7f09001a;
+        public static final int dosearchnow=0x7f090002;
+        public static final int foundpoliticians=0x7f090008;
+        public static final int imageView1=0x7f090007;
+        public static final int partyLayout=0x7f09000a;
+        public static final int partylabel=0x7f09000b;
+        public static final int partyquery=0x7f090006;
+        public static final int partytext=0x7f09000c;
+        public static final int politicianName=0x7f090009;
+        public static final int retrievefavorites=0x7f090003;
+        public static final int returnPolName=0x7f090000;
+        public static final int savefavorite=0x7f090019;
+        public static final int spinner1=0x7f090005;
+        public static final int stateLayout=0x7f09000d;
+        public static final int statelabel=0x7f09000e;
+        public static final int statetext=0x7f09000f;
+        public static final int termLabel=0x7f090011;
+        public static final int termLayout=0x7f090010;
+        public static final int termText=0x7f090012;
+        public static final int textView1=0x7f090004;
+        public static final int twitterLabel=0x7f090014;
+        public static final int twitterText=0x7f090015;
+        public static final int twitterlayout=0x7f090013;
+        public static final int websiteText=0x7f090018;
+        public static final int websitelabel=0x7f090017;
+        public static final int websitelayout=0x7f090016;
+        public static final int zipcodeentry=0x7f090001;
     }
     public static final class layout {
         public static final int main_screen=0x7f030000;
@@ -71,6 +72,7 @@ public final class R {
         public static final int mainmenu=0x7f050014;
         public static final int or_=0x7f050016;
         public static final int placeholder=0x7f05000a;
+        public static final int placeholder_previous=0x7f050017;
         public static final int placeholder_state=0x7f05000c;
         public static final int placeholder_term=0x7f05000d;
         public static final int placeholder_twitter=0x7f050010;

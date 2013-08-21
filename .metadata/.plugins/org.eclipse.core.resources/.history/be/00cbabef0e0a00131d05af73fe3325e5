@@ -29,6 +29,5 @@
 		<item>Republicans</item>
 		<item>Democrats</item>
 	</string-array>
-		<string name="placeholder_previous">Placeholder Previous</string>
 
 </resources>
