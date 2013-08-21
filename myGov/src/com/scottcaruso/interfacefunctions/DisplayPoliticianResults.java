@@ -23,6 +23,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.scottcaruso.datafunctions.SaveFavoritesLocally;
+import com.scottcaruso.mygov.DisplayResultsActivity;
 import com.scottcaruso.mygov.MainActivity;
 
 public class DisplayPoliticianResults {
@@ -42,27 +43,16 @@ public class DisplayPoliticianResults {
 	static JSONObject masterPolObject;
 
 	//Meta view: this creates the view that displays politicians. It uses a Boolean to determine whether or not the user is viewing favorites or live data, so it knows whether to show the Add or Remove button.
-	public static void showPoliticiansInMainView(final JSONObject pols, Boolean favorites)
+	public static void showPoliticiansInDisplay(final JSONObject pols, Boolean favorites)
 	{
-		backButtonClicked = false;
-		final Context currentMainContext = MainActivity.getCurrentContext();
-		final Activity a = (Activity) currentMainContext;
+		final Context currentContext = DisplayResultsActivity.getDisplayContext();
+		final Activity a = (Activity) currentContext;
 		try {
 			masterPolObject = pols;
 			Log.i("Info","Getting a JSON Array of Politicians from the passed in JSON Object.");
 			polsToDisplay = pols.getJSONArray("Politicians");
-			a.setContentView(com.scottcaruso.mygov.R.layout.politician_display);
 			viewingDisplay = true;
-			Button backButton = (Button) a.findViewById(com.scottcaruso.mygov.R.id.back);
-			backButton.setOnClickListener(new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					backButtonClicked = true;
-					a.setContentView(com.scottcaruso.mygov.R.layout.main_screen);
-					a.recreate();
-				}
-			});
+
 			//Assigns the elements used in the view.
 			final Spinner polName = (Spinner) a.findViewById(com.scottcaruso.mygov.R.id.politicianName);
 			polParty = (TextView) a.findViewById(com.scottcaruso.mygov.R.id.partytext);
@@ -78,7 +68,7 @@ public class DisplayPoliticianResults {
 				String thisPolName = thisPol.getString("Name");
 				politicianNames.add(thisPolName);
 			}
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(currentMainContext, android.R.layout.simple_spinner_item, politicianNames);
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(currentContext, android.R.layout.simple_spinner_item, politicianNames);
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			polName.setAdapter(adapter);
 			Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "To choose a different politician, click the name in the spinner view above.", Toast.LENGTH_LONG);
@@ -169,7 +159,7 @@ public class DisplayPoliticianResults {
 								String removedString = SaveFavoritesLocally.removeFromFavorites(currentPolObject.getString("Name"));
 								SaveFavoritesLocally.saveData(MainActivity.getCurrentContext(), "Politicians", removedString, false);
 								JSONObject removedObject = new JSONObject(removedString);
-								showPoliticiansInMainView(removedObject, true);
+								showPoliticiansInDisplay(removedObject, true);
 								Toast toast = Toast.makeText(MainActivity.getCurrentContext(), currentPolObject.getString("Name")+" has been removed from your favorites.", Toast.LENGTH_LONG);
 								toast.show();
 							} catch (JSONException e) {

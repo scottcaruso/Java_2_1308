@@ -36,12 +36,11 @@ public class DataRetrievalService extends IntentService{
 		//Get a string back from SunLight labs using a custom Class housed in a different Java file.
 		String dataResponse = RetrieveDataFromSunlightLabs.retrieveData("http://congress.api.sunlightfoundation.com/legislators/locate?zip="+zipString+"&apikey=eab4e1dfef1e467b8a25ed1eab0f7544");
 		Log.i("Info","Response received based on "+dataResponse);
-		//Turn that string into a JSON-readable object, using a custom Class housed in a different Java file.
-		JSONObject parsedObject = TurnStringIntoJSONObject.createMasterObject(dataResponse);
+		//Pass the string back so that it can be parsed into JSON by the DisplayActivity
 		
 		Message message = Message.obtain();
 		message.arg1 = Activity.RESULT_OK; //Tell the MainActivity that the service worked.
-		message.obj = parsedObject; //Store the JSON Object to the Main Activity so it can do its magic.
+		message.obj = dataResponse; //Store the JSON Object to the Main Activity so it can do its magic.
 		
 		try 
 		{

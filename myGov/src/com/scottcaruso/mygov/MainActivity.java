@@ -23,6 +23,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
+import android.sax.StartElementListener;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -36,6 +37,7 @@ public class MainActivity extends Activity {
 	
 	static Context currentContext;
 	public static JSONObject jsonResponse;
+	public static String response;
 	static Spinner queryChoice;
 	public static Cursor thisCursor;
 
@@ -68,7 +70,7 @@ public class MainActivity extends Activity {
         			Log.i("Info","Re-loading results");
         			currentContext = this;
 					JSONObject savedObject = new JSONObject(savedInstanceState.getString("json object"));
-					DisplayPoliticianResults.showPoliticiansInMainView(savedObject, false);
+					DisplayPoliticianResults.showPoliticiansInDisplay(savedObject, false);
 				} catch (JSONException e) {
 					e.printStackTrace();
 				}
@@ -99,6 +101,7 @@ public class MainActivity extends Activity {
     					InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
     					imm.hideSoftInputFromWindow(searchForPolsButton.getWindowToken(), 0);
     					Log.i("Info","Hiding the keyboard");
+    					
     				}
     			});
     	        
@@ -253,17 +256,24 @@ public class MainActivity extends Activity {
 					if (msg.arg1 == RESULT_OK)
 					{
 						try {
-							jsonResponse = (JSONObject) msg.obj;
+							response = (String) msg.obj;
 						} catch (Exception e) {
 							Log.e("Error","There was a problem retrieving the json Response.");
 						}
-						if (jsonResponse == null)
+						String nullResponse = "{\"results\":[],\"count\":0}";
+						if (response.equals(nullResponse))
 						{
 							Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "You have entered an invalid zip code. Please try again.", Toast.LENGTH_LONG);
 							toast.show();
 						} else
 						{
-							DisplayPoliticianResults.showPoliticiansInMainView(jsonResponse, false);
+							//DisplayPoliticianResults.showPoliticiansInMainView(jsonResponse, false);
+							Intent nextActivity = new Intent(MainActivity.getCurrentContext(),DisplayResultsActivity.class);
+							Intent testActivity = new Intent(MainActivity.getCurrentContext(),MainActivity.class);
+							nextActivity.putExtra("favorites", false);
+							nextActivity.putExtra("response", response);
+							Activity currentActivity = (Activity) getCurrentContext();
+							currentActivity.startActivityForResult(nextActivity, 0);
 						}
 					}
 				}
@@ -320,7 +330,7 @@ public class MainActivity extends Activity {
 			}
 		}
 		try {
-			DisplayPoliticianResults.showPoliticiansInMainView(masterObject, true);
+			DisplayPoliticianResults.showPoliticiansInDisplay(masterObject, true);
 			dataCursor.close();
 		}  catch (Exception e) {
 			Toast toast = Toast.makeText(getCurrentContext(), "There are no politicians saved to storage.", Toast.LENGTH_LONG);
