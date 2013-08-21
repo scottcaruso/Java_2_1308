@@ -86,7 +86,7 @@ public class TurnStringIntoJSONObject {
 						parsedPoliticianObject.put("State", thisPol.get("State"));
 						parsedPoliticianObject.put("Term Start", thisPol.get("Term Start"));
 						parsedPoliticianObject.put("Twitter", thisPol.get("Twitter"));
-						parsedPoliticianObject.put("Website", thisPol.get("Website"));
+						parsedPoliticianObject.put("Website", thisWebsite);
 						parsedPoliticians.put(parsedPoliticianObject);	
 					}
 					Log.i("Info","Results found and ready to return.");

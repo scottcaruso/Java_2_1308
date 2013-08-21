@@ -344,7 +344,7 @@ public class MainActivity extends Activity {
 			String newObject = masterObject.toString();
 			Intent nextActivity = new Intent(MainActivity.getCurrentContext(),DisplayResultsActivity.class);
 			nextActivity.putExtra("favorites", true);
-			nextActivity.putExtra("response", newObject);
+			nextActivity.putExtra("response", response);
 			Activity currentActivity = (Activity) getCurrentContext();
 			currentActivity.startActivityForResult(nextActivity, 0);
 			dataCursor.close();

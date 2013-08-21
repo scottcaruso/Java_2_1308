@@ -63,42 +63,6 @@ public class TurnStringIntoJSONObject {
 				e.printStackTrace();
 				return null;
 			}
-		} else
-		{
-			Log.i("Info","Turning the saved string into a readable JSON Object");
-			JSONObject responseObject;
-			try {
-				responseObject = new JSONObject(response);
-				JSONArray resultsArray = responseObject.getJSONArray("Politicians");
-				if (resultsArray.length() == 0)
-				{
-					Log.i("Info","There are no results to parse.");
-					return null;
-				} else
-				{
-					JSONArray parsedPoliticians = new JSONArray();
-					for (int x = 0; x < resultsArray.length(); x++)
-					{
-						JSONObject parsedPoliticianObject = new JSONObject();
-						JSONObject thisPol = resultsArray.getJSONObject(x);
-						parsedPoliticianObject.put("Name", thisPol.get("Name"));
-						parsedPoliticianObject.put("Party", thisPol.get("Party"));
-						parsedPoliticianObject.put("State", thisPol.get("State"));
-						parsedPoliticianObject.put("Term Start", thisPol.get("Term Start"));
-						parsedPoliticianObject.put("Twitter", thisPol.get("Twitter"));
-						parsedPoliticianObject.put("Website", thisPol.get("Website"));
-						parsedPoliticians.put(parsedPoliticianObject);	
-					}
-					Log.i("Info","Results found and ready to return.");
-					JSONObject politicians = new JSONObject().put("Politicians", parsedPoliticians);
-					return politicians;
-				}
-				
-			} catch (JSONException e) {
-				
-				e.printStackTrace();
-				return null;
-			}
 		}
 		
 	}

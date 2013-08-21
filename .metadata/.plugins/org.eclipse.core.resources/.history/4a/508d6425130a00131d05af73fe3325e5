@@ -27,7 +27,7 @@ public class DisplayResultsActivity extends Activity {
 		Bundle passedData = getIntent().getExtras();
 		pols = (String) passedData.get("response");
 		favorites = (Boolean) passedData.getBoolean("favorites");
-		JSONObject responseObject = TurnStringIntoJSONObject.createMasterObject(pols,favorites);
+		JSONObject responseObject = TurnStringIntoJSONObject.createMasterObject(pols);
 		DisplayPoliticianResults.showPoliticiansInDisplay(responseObject, favorites);
 	}
 	

@@ -81,12 +81,23 @@ public class TurnStringIntoJSONObject {
 					{
 						JSONObject parsedPoliticianObject = new JSONObject();
 						JSONObject thisPol = resultsArray.getJSONObject(x);
-						parsedPoliticianObject.put("Name", thisPol.get("Name"));
-						parsedPoliticianObject.put("Party", thisPol.get("Party"));
-						parsedPoliticianObject.put("State", thisPol.get("State"));
-						parsedPoliticianObject.put("Term Start", thisPol.get("Term Start"));
-						parsedPoliticianObject.put("Twitter", thisPol.get("Twitter"));
-						parsedPoliticianObject.put("Website", thisPol.get("Website"));
+						String thisFirstName = thisPol.getString("first_name");
+						String thisLastName = thisPol.getString("last_name");
+						String thisTitle = thisPol.getString("title");
+						String fullName = thisTitle + ". " + thisFirstName + " " + thisLastName;
+						String thisID = thisPol.getString("bioguide_id");
+						String thisParty = thisPol.getString("party");
+						String thisState = thisPol.getString("state");
+						String termStarted = thisPol.getString("term_start");
+						String twitterHandle = thisPol.getString("twitter_id");
+						String thisWebsite = thisPol.getString("website");
+						parsedPoliticianObject.put("Name", fullName);
+						parsedPoliticianObject.put("ID", thisID);
+						parsedPoliticianObject.put("Party", thisParty);
+						parsedPoliticianObject.put("State", thisState);
+						parsedPoliticianObject.put("Term Start", termStarted);
+						parsedPoliticianObject.put("Twitter", twitterHandle);
+						parsedPoliticianObject.put("Website", thisWebsite);
 						parsedPoliticians.put(parsedPoliticianObject);	
 					}
 					Log.i("Info","Results found and ready to return.");
