@@ -220,15 +220,6 @@ public class MainActivity extends Activity {
 			});
         }
     }
-    
-    @Override
-    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-      if (resultCode == RESULT_OK && requestCode == 0) {
-        Bundle result = data.getExtras();
-        String polName = result.getString("lastpolname");
-        Log.i("Info",polName);
-      }
-    }
 	
 	public static void setCurrentContext (Context context)
 	{

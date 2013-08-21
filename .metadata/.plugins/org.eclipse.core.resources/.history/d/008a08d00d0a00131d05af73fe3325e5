@@ -34,7 +34,7 @@ public class DisplayResultsActivity extends Activity {
 	@Override
 	public void finish() {
 		final Spinner polName = (Spinner) findViewById(com.scottcaruso.mygov.R.id.politicianName);
-		String name = polName.getSelectedItem().toString();
+		String name = polName.toString();
 	    Intent data = new Intent();
 	    data.putExtra("lastpolname", name);
 	    setResult(RESULT_OK, data);

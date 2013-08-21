@@ -7,9 +7,7 @@ import com.scottcaruso.interfacefunctions.DisplayPoliticianResults;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
 import android.os.Bundle;
-import android.widget.Spinner;
 
 public class DisplayResultsActivity extends Activity {
 	
@@ -33,10 +31,9 @@ public class DisplayResultsActivity extends Activity {
 	
 	@Override
 	public void finish() {
-		final Spinner polName = (Spinner) findViewById(com.scottcaruso.mygov.R.id.politicianName);
-		String name = polName.getSelectedItem().toString();
 	    Intent data = new Intent();
-	    data.putExtra("lastpolname", name);
+	    data.putExtra("keyA", value1);
+	    data.putExtra("keyB", value2);
 	    setResult(RESULT_OK, data);
 	    super.finish();
 	}

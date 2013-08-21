@@ -226,7 +226,6 @@ public class MainActivity extends Activity {
       if (resultCode == RESULT_OK && requestCode == 0) {
         Bundle result = data.getExtras();
         String polName = result.getString("lastpolname");
-        Log.i("Info",polName);
       }
     }
 	
