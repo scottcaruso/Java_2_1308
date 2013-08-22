@@ -151,15 +151,6 @@ public class DisplayPoliticianResults {
 					});
 				};
 				
-				polWebsite.setOnClickListener(new View.OnClickListener() {
-					
-					@Override
-					public void onClick(View v) {
-					String websiteName = polWebsite.getText().toString();
-					launchWebPage(websiteName);
-					}
-				});
-				
 				if (removeAsFavorite != null)
 				{
 					removeAsFavorite.setOnClickListener(new View.OnClickListener() {

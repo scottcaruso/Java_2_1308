@@ -34,7 +34,7 @@ public class DisplayPoliticianResults {
 	static TextView polState = null;
 	static TextView polTerm = null;
 	static TextView polTwitter = null;
-	static Button polWebsite = null;
+	static TextView polWebsite = null;
 	static JSONArray polsToDisplay;
 	static JSONObject currentPolObject;
 	static Button saveAsFavorite;
@@ -61,7 +61,7 @@ public class DisplayPoliticianResults {
 			polState = (TextView) a.findViewById(com.scottcaruso.mygov.R.id.statetext);
 			polTerm = (TextView) a.findViewById(com.scottcaruso.mygov.R.id.termText);
 			polTwitter = (TextView) a.findViewById(com.scottcaruso.mygov.R.id.twitterText);
-			polWebsite = (Button) a.findViewById(com.scottcaruso.mygov.R.id.websiteText);
+			polWebsite = (TextView) a.findViewById(com.scottcaruso.mygov.R.id.websiteText);
 			//Creates an array of the received results, and then populates a Spinner View in the Results page.
 			ArrayList<String> politicianNames = new ArrayList<String>();
 			for (int x = 0; x < polsToDisplay.length(); x++)
@@ -151,15 +151,6 @@ public class DisplayPoliticianResults {
 					});
 				};
 				
-				polWebsite.setOnClickListener(new View.OnClickListener() {
-					
-					@Override
-					public void onClick(View v) {
-					String websiteName = polWebsite.getText().toString();
-					launchWebPage(websiteName);
-					}
-				});
-				
 				if (removeAsFavorite != null)
 				{
 					removeAsFavorite.setOnClickListener(new View.OnClickListener() {
@@ -207,7 +198,7 @@ public class DisplayPoliticianResults {
 	public static void launchWebPage(String website)
 	{
 		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(website));
-		DisplayResultsActivity.getDisplayContext().startActivity(browserIntent);
+		this.startActivity(browserIntent);
 	}
 	
 	public static JSONArray getPolsToDisplay() {

@@ -155,10 +155,10 @@ public class DisplayPoliticianResults {
 					
 					@Override
 					public void onClick(View v) {
-					String websiteName = polWebsite.getText().toString();
-					launchWebPage(websiteName);
+						// TODO Auto-generated method stub
+						
 					}
-				});
+				})
 				
 				if (removeAsFavorite != null)
 				{

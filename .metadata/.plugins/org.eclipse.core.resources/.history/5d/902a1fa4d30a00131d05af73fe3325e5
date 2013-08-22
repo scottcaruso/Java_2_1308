@@ -59,6 +59,12 @@ public class DisplayResultsActivity extends Activity {
 	    super.finish();
 	}
 	
+	public void launchWebPage(String website)
+	{
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(website));
+		this.startActivity(browserIntent);
+	}
+	
 	public static Context getDisplayContext() {
 		return displayContext;
 	}

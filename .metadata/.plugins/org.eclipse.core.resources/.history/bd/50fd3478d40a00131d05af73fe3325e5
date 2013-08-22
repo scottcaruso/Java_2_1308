@@ -155,7 +155,7 @@ public class DisplayPoliticianResults {
 					
 					@Override
 					public void onClick(View v) {
-					String websiteName = polWebsite.getText().toString();
+					String websiteName = polWebsite.getText()().toString();
 					launchWebPage(websiteName);
 					}
 				});
