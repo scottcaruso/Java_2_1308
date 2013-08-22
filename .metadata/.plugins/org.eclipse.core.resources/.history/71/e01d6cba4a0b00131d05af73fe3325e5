@@ -35,7 +35,7 @@ public class DisplayResultsActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		Log.i("Info","Created display activity.";
+		Log.i("Info","Created display activity.")
 		orientationState = false;
 		if (savedInstanceState != null)
 		{
