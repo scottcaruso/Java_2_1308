@@ -35,7 +35,6 @@ public class DisplayResultsActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		Log.i("Info","Created display activity.")
 		orientationState = false;
 		if (savedInstanceState != null)
 		{
@@ -55,7 +54,6 @@ public class DisplayResultsActivity extends Activity {
 	
 	@Override
 	public void finish() {
-		Log.i("Info","Display Activity Finishing");
 		final Spinner polName = (Spinner) findViewById(com.scottcaruso.mygov.R.id.politicianName);
 		String name = polName.getSelectedItem().toString();
 	    Intent data = new Intent();

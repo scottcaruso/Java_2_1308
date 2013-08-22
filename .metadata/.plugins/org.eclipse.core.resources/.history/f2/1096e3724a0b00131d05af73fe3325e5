@@ -55,7 +55,6 @@ public class DisplayResultsActivity extends Activity {
 	
 	@Override
 	public void finish() {
-		Log.i("Info","Display Activity Finishing");
 		final Spinner polName = (Spinner) findViewById(com.scottcaruso.mygov.R.id.politicianName);
 		String name = polName.getSelectedItem().toString();
 	    Intent data = new Intent();
