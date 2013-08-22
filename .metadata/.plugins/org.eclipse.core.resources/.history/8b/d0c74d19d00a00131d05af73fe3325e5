@@ -17,12 +17,11 @@ public class DisplayResultsActivity extends Activity {
 	String pols;
 	Boolean favorites;
 	static Context displayContext;
-	Boolean orientationState;
 
 	@Override
 	protected void onSaveInstanceState(Bundle savedInstanceState) {
 		Log.i("Info","State Change Detected");
-		savedInstanceState.putBoolean("orientationchanged", true);
+
 		super.onSaveInstanceState(savedInstanceState);
 	}
 	
@@ -30,14 +29,6 @@ public class DisplayResultsActivity extends Activity {
 	protected void onCreate(Bundle savedInstanceState)
 	{
 		super.onCreate(savedInstanceState);
-		orientationState = false;
-		if (savedInstanceState != null)
-		{
-			if (savedInstanceState.getBoolean("orientationchanged") == true)
-			{
-				orientationState = true;
-			}
-		}
 		setDisplayContext(DisplayResultsActivity.this);
 		this.setContentView(R.layout.politician_display);
 		Bundle passedData = getIntent().getExtras();
@@ -53,7 +44,6 @@ public class DisplayResultsActivity extends Activity {
 		String name = polName.getSelectedItem().toString();
 	    Intent data = new Intent();
 	    data.putExtra("lastpolname", name);
-	    data.putExtra("orientationchanged", orientationState);
 	    setResult(RESULT_OK, data);
 	    super.finish();
 	}

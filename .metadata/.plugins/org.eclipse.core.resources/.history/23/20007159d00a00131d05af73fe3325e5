@@ -31,12 +31,9 @@ public class DisplayResultsActivity extends Activity {
 	{
 		super.onCreate(savedInstanceState);
 		orientationState = false;
-		if (savedInstanceState != null)
+		if (savedInstanceState.getBoolean("orientationchanged") == true)
 		{
-			if (savedInstanceState.getBoolean("orientationchanged") == true)
-			{
-				orientationState = true;
-			}
+			orientationState = true;
 		}
 		setDisplayContext(DisplayResultsActivity.this);
 		this.setContentView(R.layout.politician_display);
@@ -53,7 +50,7 @@ public class DisplayResultsActivity extends Activity {
 		String name = polName.getSelectedItem().toString();
 	    Intent data = new Intent();
 	    data.putExtra("lastpolname", name);
-	    data.putExtra("orientationchanged", orientationState);
+	    data.putExtra("orientationchanged", orientationState)
 	    setResult(RESULT_OK, data);
 	    super.finish();
 	}
