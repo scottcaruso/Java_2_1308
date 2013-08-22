@@ -23,7 +23,6 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.database.Cursor;
-import android.sax.StartElementListener;
 import android.util.Log;
 import android.view.Menu;
 import android.view.View;
@@ -339,17 +338,23 @@ public class MainActivity extends Activity {
 			} catch (JSONException e) {
 				e.printStackTrace();
 			}
+			try 
+			{
+				String newObject = masterObject.toString();
+				Intent nextActivity = new Intent(MainActivity.getCurrentContext(),DisplayResultsActivity.class);
+				nextActivity.putExtra("favorites", true);
+				nextActivity.putExtra("response", newObject);
+				Activity currentActivity = (Activity) getCurrentContext();
+				currentActivity.startActivityForResult(nextActivity, 0);
+				dataCursor.close();
+			}  catch (Exception e) {
+				Toast toast = Toast.makeText(getCurrentContext(), "There are no politicians saved to storage.", Toast.LENGTH_LONG);
+				toast.show();
+			}
 		}
-		try {
-			String newObject = masterObject.toString();
-			Intent nextActivity = new Intent(MainActivity.getCurrentContext(),DisplayResultsActivity.class);
-			nextActivity.putExtra("favorites", true);
-			nextActivity.putExtra("response", newObject);
-			Activity currentActivity = (Activity) getCurrentContext();
-			currentActivity.startActivityForResult(nextActivity, 0);
-			dataCursor.close();
-		}  catch (Exception e) {
-			Toast toast = Toast.makeText(getCurrentContext(), "There are no politicians saved to storage.", Toast.LENGTH_LONG);
+		else
+		{
+			Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "There are no saved politicians to view.", Toast.LENGTH_LONG);
 			toast.show();
 		}
 	}

@@ -1,8 +1,5 @@
 package com.scottcaruso.datafunctions;
 
-import org.json.JSONObject;
-
-
 import android.app.Activity;
 import android.app.IntentService;
 import android.content.Intent;

@@ -22,7 +22,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.scottcaruso.datafunctions.SaveFavoritesLocally;
+import com.scottcaruso.datafunctions.DataSingleton;
 import com.scottcaruso.mygov.DisplayResultsActivity;
 import com.scottcaruso.mygov.MainActivity;
 
@@ -102,7 +102,7 @@ public class DisplayPoliticianResults {
 						
 						@Override
 						public void onClick(View v) {
-							String savedData  = SaveFavoritesLocally.getSavedPols();
+							String savedData  = DataSingleton.getSavedPols();
 							String masterObjectString = "";
 							if (savedData == null)
 							{
@@ -122,14 +122,14 @@ public class DisplayPoliticianResults {
 									e.printStackTrace();
 								}
 								masterObjectString = masterObject.toString();
-								SaveFavoritesLocally.saveData(MainActivity.getCurrentContext(), "Politicians", masterObjectString, false);
+								DataSingleton.saveData(MainActivity.getCurrentContext(), "Politicians", masterObjectString, false);
 								Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "This politician has been saved to your favorites!", Toast.LENGTH_LONG);
 								toast.show();
 							} else
 							{
 								Boolean isThisItemAlreadySaved = false;
 								try {
-									isThisItemAlreadySaved = SaveFavoritesLocally.determineIfAlreadySaved(savedData,currentPolObject.getString("Name"));
+									isThisItemAlreadySaved = DataSingleton.determineIfAlreadySaved(savedData,currentPolObject.getString("Name"));
 								} catch (JSONException e1) {
 									e1.printStackTrace();
 								}
@@ -139,8 +139,8 @@ public class DisplayPoliticianResults {
 									toast.show();
 								} else
 								{
-									masterObjectString = SaveFavoritesLocally.appendNewDataToExistingString(savedData, currentPolObject.toString());
-									SaveFavoritesLocally.saveData(MainActivity.getCurrentContext(), "Politicians", masterObjectString, false);
+									masterObjectString = DataSingleton.appendNewDataToExistingString(savedData, currentPolObject.toString());
+									DataSingleton.saveData(MainActivity.getCurrentContext(), "Politicians", masterObjectString, false);
 									Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "This politician has been saved to your favorites!", Toast.LENGTH_LONG);
 									toast.show();
 								}
@@ -156,8 +156,8 @@ public class DisplayPoliticianResults {
 						@Override
 						public void onClick(View v) {
 							try {
-								String removedString = SaveFavoritesLocally.removeFromFavorites(currentPolObject.getString("Name"));
-								SaveFavoritesLocally.saveData(MainActivity.getCurrentContext(), "Politicians", removedString, false);
+								String removedString = DataSingleton.removeFromFavorites(currentPolObject.getString("Name"));
+								DataSingleton.saveData(MainActivity.getCurrentContext(), "Politicians", removedString, false);
 								JSONObject removedObject = new JSONObject(removedString);
 								showPoliticiansInDisplay(removedObject, true);
 								Toast toast = Toast.makeText(MainActivity.getCurrentContext(), currentPolObject.getString("Name")+" has been removed from your favorites.", Toast.LENGTH_LONG);

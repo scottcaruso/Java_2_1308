@@ -83,12 +83,10 @@ public class SavedPoliticianProvider extends ContentProvider{
 			String[] selectionArgs, String sortOrder) {
 		
 		MatrixCursor result = new MatrixCursor(PoliticianData.PROJECTION);
-		JSONString = SaveFavoritesLocally.getSavedPols();
+		JSONString = DataSingleton.getSavedPols();
 		if (JSONString == null)
 		{
-			Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "There are no saved politicians to view.", Toast.LENGTH_LONG);
-			toast.show();
-			return result;
+			return null;
 		}
 		JSONObject masterObject = null;
 		JSONArray polArray = null;

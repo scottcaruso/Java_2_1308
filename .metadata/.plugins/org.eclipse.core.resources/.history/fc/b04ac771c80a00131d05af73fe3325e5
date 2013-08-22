@@ -1,0 +1,173 @@
+package com.scottcaruso.datafunctions;
+
+import java.io.BufferedInputStream;
+import java.io.IOException;
+import java.net.MalformedURLException;
+import java.net.URL;
+import java.net.URLConnection;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import android.util.Log;
+
+public class DataSingleton {
+
+	private static DataSingleton instance = null;
+	protected DataSingleton()
+	{
+	}
+	public static DataSingleton getInstance()
+	{
+		if (instance == null)
+		{
+			instance = new DataSingleton();
+		}
+		return instance;
+	}
+	
+	public static JSONObject createMasterObject(String response, Boolean favorites)
+	{
+		if (favorites == false)
+		{
+			Log.i("Info","Turning the saved string into a readable JSON Object");
+			JSONObject responseObject;
+			try {
+				responseObject = new JSONObject(response);
+				JSONArray resultsArray = responseObject.getJSONArray("results");
+				if (resultsArray.length() == 0)
+				{
+					Log.i("Info","There are no results to parse.");
+					return null;
+				} else
+				{
+					JSONArray parsedPoliticians = new JSONArray();
+					for (int x = 0; x < resultsArray.length(); x++)
+					{
+						JSONObject parsedPoliticianObject = new JSONObject();
+						JSONObject thisPol = resultsArray.getJSONObject(x);
+						String thisFirstName = thisPol.getString("first_name");
+						String thisLastName = thisPol.getString("last_name");
+						String thisTitle = thisPol.getString("title");
+						String fullName = thisTitle + ". " + thisFirstName + " " + thisLastName;
+						String thisID = thisPol.getString("bioguide_id");
+						String thisParty = thisPol.getString("party");
+						String thisState = thisPol.getString("state");
+						String termStarted = thisPol.getString("term_start");
+						String twitterHandle = thisPol.getString("twitter_id");
+						String thisWebsite = thisPol.getString("website");
+						parsedPoliticianObject.put("Name", fullName);
+						parsedPoliticianObject.put("ID", thisID);
+						parsedPoliticianObject.put("Party", thisParty);
+						parsedPoliticianObject.put("State", thisState);
+						parsedPoliticianObject.put("Term Start", termStarted);
+						parsedPoliticianObject.put("Twitter", twitterHandle);
+						parsedPoliticianObject.put("Website", thisWebsite);
+						parsedPoliticians.put(parsedPoliticianObject);	
+					}
+					Log.i("Info","Results found and ready to return.");
+					JSONObject politicians = new JSONObject().put("Politicians", parsedPoliticians);
+					return politicians;
+				}
+				
+			} catch (JSONException e) {
+				
+				e.printStackTrace();
+				return null;
+			}
+		} else
+		{
+			Log.i("Info","Turning the saved string into a readable JSON Object");
+			JSONObject responseObject;
+			try {
+				responseObject = new JSONObject(response);
+				JSONArray resultsArray = responseObject.getJSONArray("Politicians");
+				if (resultsArray.length() == 0)
+				{
+					Log.i("Info","There are no results to parse.");
+					return null;
+				} else
+				{
+					JSONArray parsedPoliticians = new JSONArray();
+					for (int x = 0; x < resultsArray.length(); x++)
+					{
+						JSONObject parsedPoliticianObject = new JSONObject();
+						JSONObject thisPol = resultsArray.getJSONObject(x);
+						parsedPoliticianObject.put("Name", thisPol.get("Name"));
+						parsedPoliticianObject.put("Party", thisPol.get("Party"));
+						parsedPoliticianObject.put("State", thisPol.get("State"));
+						parsedPoliticianObject.put("Term Start", thisPol.get("Term Start"));
+						parsedPoliticianObject.put("Twitter", thisPol.get("Twitter"));
+						parsedPoliticianObject.put("Website", thisPol.get("Website"));
+						parsedPoliticians.put(parsedPoliticianObject);	
+					}
+					Log.i("Info","Results found and ready to return.");
+					JSONObject politicians = new JSONObject().put("Politicians", parsedPoliticians);
+					return politicians;
+				}
+				
+			} catch (JSONException e) {
+				
+				e.printStackTrace();
+				return null;
+			}
+		}
+	}
+	
+	static String response = "";
+	static BufferedInputStream bin;
+	
+	public static String retrieveData(String urlString)
+	{
+		URL dataURL;
+		Log.i("URL","Data URL created.");
+		try 
+		{
+			dataURL = new URL(urlString);
+			String response = getResponse(dataURL);
+			Log.i("Info","Response received: " + response);
+			return response;	
+		} 
+		catch (MalformedURLException e) 
+		{
+			e.printStackTrace();
+			return null;
+		}
+	}
+	
+	public static String getResponse(URL url)
+	{
+
+		try 
+		{
+			URLConnection connection = url.openConnection();
+			try {
+				bin = new BufferedInputStream(connection.getInputStream());
+				Log.i("Info","Starting buffered input stream.");
+			} catch (Exception e) {
+				Log.e("Error","Failed at BufferedInputStream");
+				e.printStackTrace();
+			}
+			
+			byte[] contentBytes = new byte[1024];
+			int bytesRead = 0;
+			StringBuffer responseBuffer = new StringBuffer();
+			
+			while((bytesRead = bin.read(contentBytes)) != -1)
+			{
+				response = new String(contentBytes,0,bytesRead);
+				responseBuffer.append(response);
+			}
+			Log.i("Info","Content read and response created.");
+			return responseBuffer.toString();
+		
+		} catch (IOException e) {
+			Log.e("Error", "getURLStringResponse");
+			e.printStackTrace();
+		}
+	
+		return response;
+	}
+	
+}
