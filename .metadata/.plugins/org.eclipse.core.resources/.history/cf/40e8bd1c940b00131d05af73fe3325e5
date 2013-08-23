@@ -56,7 +56,7 @@ public class DisplayResultsActivity extends Activity {
 	public void finish() {
 		Log.i("Info","Display Activity Finishing");
 		final Spinner polName = (Spinner) findViewById(com.scottcaruso.mygov.R.id.politicianName);
-		String name = null;
+		String name;
 		try {
 			name = polName.getSelectedItem().toString();
 		} catch (Exception e) {

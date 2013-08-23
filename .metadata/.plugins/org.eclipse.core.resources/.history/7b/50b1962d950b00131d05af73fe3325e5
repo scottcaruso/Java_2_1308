@@ -250,7 +250,7 @@ public class MainActivity extends Activity {
 				{
 					if (SavedPoliticianProvider.JSONString != null)
 					{
-						Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "There are no politicians saved to storage.", Toast.LENGTH_LONG);
+						Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "There are no saved " + queryChoice.getSelectedItem().toString() + " to view.", Toast.LENGTH_LONG);
 						toast.show();
 					}
 				}

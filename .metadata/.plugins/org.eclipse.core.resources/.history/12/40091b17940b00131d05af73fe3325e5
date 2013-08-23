@@ -56,12 +56,7 @@ public class DisplayResultsActivity extends Activity {
 	public void finish() {
 		Log.i("Info","Display Activity Finishing");
 		final Spinner polName = (Spinner) findViewById(com.scottcaruso.mygov.R.id.politicianName);
-		String name = null;
-		try {
-			name = polName.getSelectedItem().toString();
-		} catch (Exception e) {
-			Log.i("Info","There was no name to save. probably because all politicians were deleted from favorites.");
-		}
+		String name = polName.getSelectedItem().toString();
 	    Intent data = new Intent();
 	    data.putExtra("lastpolname", name);
 	    data.putExtra("orientationchanged", orientationState);

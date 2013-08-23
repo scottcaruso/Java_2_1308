@@ -215,53 +215,58 @@ public class MainActivity extends Activity {
 	
 	public static void turnCursorIntoDisplay(Cursor dataCursor)
 	{
-		JSONObject masterObject = new JSONObject();
-		JSONArray arrayOfPols = new JSONArray();
-		JSONObject thisObject = null;
-		
-		Log.i("Info","Parsing cursor to pull data into display.");
-		if (dataCursor != null) 
-		{
-			try 
+		try {
+			JSONObject masterObject = new JSONObject();
+			JSONArray arrayOfPols = new JSONArray();
+			JSONObject thisObject = null;
+			
+			Log.i("Info","Parsing cursor to pull data into display.");
+			if (dataCursor != null) 
 			{
-				if (dataCursor.moveToFirst())
+				try 
 				{
-					   while(!dataCursor.isAfterLast())
-					   {
-						  thisObject = new JSONObject(dataCursor.getString(dataCursor.getColumnIndex("polObject")));
-					      arrayOfPols.put(thisObject);
-					      dataCursor.moveToNext();
-					   }
-						masterObject.put("Politicians", arrayOfPols);
-						try 
+					if (dataCursor.moveToFirst())
+					{
+						   while(!dataCursor.isAfterLast())
+						   {
+							  thisObject = new JSONObject(dataCursor.getString(dataCursor.getColumnIndex("polObject")));
+						      arrayOfPols.put(thisObject);
+						      dataCursor.moveToNext();
+						   }
+							masterObject.put("Politicians", arrayOfPols);
+					} else
+					{
+						if (SavedPoliticianProvider.JSONString != null)
 						{
-							String newObject = masterObject.toString();
-							Intent nextActivity = new Intent(MainActivity.getCurrentContext(),DisplayResultsActivity.class);
-							nextActivity.putExtra("favorites", true);
-							nextActivity.putExtra("response", newObject);
-							Activity currentActivity = (Activity) getCurrentContext();
-							currentActivity.startActivityForResult(nextActivity, 0);
-							dataCursor.close();
-						}  catch (Exception e) {
-							Toast toast = Toast.makeText(getCurrentContext(), "There are no politicians saved to storage.", Toast.LENGTH_LONG);
+							Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "There are no saved " + queryChoice.getSelectedItem().toString() + " to view.", Toast.LENGTH_LONG);
 							toast.show();
 						}
-				} else
-				{
-					if (SavedPoliticianProvider.JSONString != null)
-					{
-						Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "There are no politicians saved to storage.", Toast.LENGTH_LONG);
-						toast.show();
 					}
+				} catch (JSONException e) {
+					e.printStackTrace();
 				}
-			} catch (JSONException e) {
-				e.printStackTrace();
+				try 
+				{
+					String newObject = masterObject.toString();
+					Intent nextActivity = new Intent(MainActivity.getCurrentContext(),DisplayResultsActivity.class);
+					nextActivity.putExtra("favorites", true);
+					nextActivity.putExtra("response", newObject);
+					Activity currentActivity = (Activity) getCurrentContext();
+					currentActivity.startActivityForResult(nextActivity, 0);
+					dataCursor.close();
+				}  catch (Exception e) {
+					Toast toast = Toast.makeText(getCurrentContext(), "There are no politicians saved to storage.", Toast.LENGTH_LONG);
+					toast.show();
+				}
 			}
-		}
-		else
-		{
-			Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "There are no saved politicians to view.", Toast.LENGTH_LONG);
-			toast.show();
+			else
+			{
+				Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "There are no saved politicians to view.", Toast.LENGTH_LONG);
+				toast.show();
+			}
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
     
