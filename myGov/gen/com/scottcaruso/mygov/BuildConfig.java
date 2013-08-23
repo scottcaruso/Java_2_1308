@@ -1,7 +1,4 @@
-/* Scott Caruso
- * Java II 1308
- * Week 3 Assignment
- */
+/** Automatically generated file. DO NOT MODIFY */
 package com.scottcaruso.mygov;
 
 public final class BuildConfig {
