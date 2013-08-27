@@ -1,0 +1,20 @@
+package com.scottcaruso.datafunctions;
+
+public class DataSingleton {
+
+	private static DataSingleton instance = null;
+	protected DataSingleton()
+	{
+	}
+	public static DataSingleton getInstance()
+	{
+		if (instance == null)
+		{
+			instance = new DataSingleton();
+		}
+		return instance;
+	}
+	
+	
+	
+}

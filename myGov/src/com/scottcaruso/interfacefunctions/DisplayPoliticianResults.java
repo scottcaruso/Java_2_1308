@@ -1,6 +1,6 @@
 /* Scott Caruso
- * Java 1 - 1307
- * Week 4 Project
+ * Java II 1308
+ * Week 3 Assignment
  */
 package com.scottcaruso.interfacefunctions;
 
@@ -12,6 +12,8 @@ import org.json.JSONObject;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.util.Log;
 import android.view.View;
 import android.widget.AdapterView;
@@ -22,7 +24,8 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.scottcaruso.datafunctions.SaveFavoritesLocally;
+import com.scottcaruso.datafunctions.DataSingleton;
+import com.scottcaruso.mygov.DisplayResultsActivity;
 import com.scottcaruso.mygov.MainActivity;
 
 public class DisplayPoliticianResults {
@@ -31,7 +34,7 @@ public class DisplayPoliticianResults {
 	static TextView polState = null;
 	static TextView polTerm = null;
 	static TextView polTwitter = null;
-	static TextView polWebsite = null;
+	static Button polWebsite = null;
 	static JSONArray polsToDisplay;
 	static JSONObject currentPolObject;
 	static Button saveAsFavorite;
@@ -42,34 +45,23 @@ public class DisplayPoliticianResults {
 	static JSONObject masterPolObject;
 
 	//Meta view: this creates the view that displays politicians. It uses a Boolean to determine whether or not the user is viewing favorites or live data, so it knows whether to show the Add or Remove button.
-	public static void showPoliticiansInMainView(final JSONObject pols, Boolean favorites)
+	public static void showPoliticiansInDisplay(final JSONObject pols, Boolean favorites)
 	{
-		backButtonClicked = false;
-		final Context currentMainContext = MainActivity.getCurrentContext();
-		final Activity a = (Activity) currentMainContext;
+		final Context currentContext = DisplayResultsActivity.getDisplayContext();
+		final Activity a = (Activity) currentContext;
 		try {
 			masterPolObject = pols;
 			Log.i("Info","Getting a JSON Array of Politicians from the passed in JSON Object.");
 			polsToDisplay = pols.getJSONArray("Politicians");
-			a.setContentView(com.scottcaruso.mygov.R.layout.politician_display);
 			viewingDisplay = true;
-			Button backButton = (Button) a.findViewById(com.scottcaruso.mygov.R.id.back);
-			backButton.setOnClickListener(new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-					backButtonClicked = true;
-					a.setContentView(com.scottcaruso.mygov.R.layout.main_screen);
-					a.recreate();
-				}
-			});
+
 			//Assigns the elements used in the view.
 			final Spinner polName = (Spinner) a.findViewById(com.scottcaruso.mygov.R.id.politicianName);
 			polParty = (TextView) a.findViewById(com.scottcaruso.mygov.R.id.partytext);
 			polState = (TextView) a.findViewById(com.scottcaruso.mygov.R.id.statetext);
 			polTerm = (TextView) a.findViewById(com.scottcaruso.mygov.R.id.termText);
 			polTwitter = (TextView) a.findViewById(com.scottcaruso.mygov.R.id.twitterText);
-			polWebsite = (TextView) a.findViewById(com.scottcaruso.mygov.R.id.websiteText);
+			polWebsite = (Button) a.findViewById(com.scottcaruso.mygov.R.id.websiteText);
 			//Creates an array of the received results, and then populates a Spinner View in the Results page.
 			ArrayList<String> politicianNames = new ArrayList<String>();
 			for (int x = 0; x < polsToDisplay.length(); x++)
@@ -78,7 +70,7 @@ public class DisplayPoliticianResults {
 				String thisPolName = thisPol.getString("Name");
 				politicianNames.add(thisPolName);
 			}
-			ArrayAdapter<String> adapter = new ArrayAdapter<String>(currentMainContext, android.R.layout.simple_spinner_item, politicianNames);
+			ArrayAdapter<String> adapter = new ArrayAdapter<String>(currentContext, android.R.layout.simple_spinner_item, politicianNames);
 			adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 			polName.setAdapter(adapter);
 			Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "To choose a different politician, click the name in the spinner view above.", Toast.LENGTH_LONG);
@@ -112,7 +104,7 @@ public class DisplayPoliticianResults {
 						
 						@Override
 						public void onClick(View v) {
-							String savedData  = SaveFavoritesLocally.getSavedPols();
+							String savedData  = DataSingleton.getSavedPols();
 							String masterObjectString = "";
 							if (savedData == null)
 							{
@@ -132,14 +124,14 @@ public class DisplayPoliticianResults {
 									e.printStackTrace();
 								}
 								masterObjectString = masterObject.toString();
-								SaveFavoritesLocally.saveData(MainActivity.getCurrentContext(), "Politicians", masterObjectString, false);
+								DataSingleton.saveData(MainActivity.getCurrentContext(), "Politicians", masterObjectString, false);
 								Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "This politician has been saved to your favorites!", Toast.LENGTH_LONG);
 								toast.show();
 							} else
 							{
 								Boolean isThisItemAlreadySaved = false;
 								try {
-									isThisItemAlreadySaved = SaveFavoritesLocally.determineIfAlreadySaved(savedData,currentPolObject.getString("Name"));
+									isThisItemAlreadySaved = DataSingleton.determineIfAlreadySaved(savedData,currentPolObject.getString("Name"));
 								} catch (JSONException e1) {
 									e1.printStackTrace();
 								}
@@ -149,8 +141,8 @@ public class DisplayPoliticianResults {
 									toast.show();
 								} else
 								{
-									masterObjectString = SaveFavoritesLocally.appendNewDataToExistingString(savedData, currentPolObject.toString());
-									SaveFavoritesLocally.saveData(MainActivity.getCurrentContext(), "Politicians", masterObjectString, false);
+									masterObjectString = DataSingleton.appendNewDataToExistingString(savedData, currentPolObject.toString());
+									DataSingleton.saveData(MainActivity.getCurrentContext(), "Politicians", masterObjectString, false);
 									Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "This politician has been saved to your favorites!", Toast.LENGTH_LONG);
 									toast.show();
 								}
@@ -159,6 +151,15 @@ public class DisplayPoliticianResults {
 					});
 				};
 				
+				polWebsite.setOnClickListener(new View.OnClickListener() {
+					
+					@Override
+					public void onClick(View v) {
+					String websiteName = polWebsite.getText().toString();
+					launchWebPage(websiteName);
+					}
+				});
+				
 				if (removeAsFavorite != null)
 				{
 					removeAsFavorite.setOnClickListener(new View.OnClickListener() {
@@ -166,10 +167,10 @@ public class DisplayPoliticianResults {
 						@Override
 						public void onClick(View v) {
 							try {
-								String removedString = SaveFavoritesLocally.removeFromFavorites(currentPolObject.getString("Name"));
-								SaveFavoritesLocally.saveData(MainActivity.getCurrentContext(), "Politicians", removedString, false);
+								String removedString = DataSingleton.removeFromFavorites(currentPolObject.getString("Name"));
+								DataSingleton.saveData(MainActivity.getCurrentContext(), "Politicians", removedString, false);
 								JSONObject removedObject = new JSONObject(removedString);
-								showPoliticiansInMainView(removedObject, true);
+								showPoliticiansInDisplay(removedObject, true);
 								Toast toast = Toast.makeText(MainActivity.getCurrentContext(), currentPolObject.getString("Name")+" has been removed from your favorites.", Toast.LENGTH_LONG);
 								toast.show();
 							} catch (JSONException e) {
@@ -201,6 +202,12 @@ public class DisplayPoliticianResults {
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public static void launchWebPage(String website)
+	{
+		Intent browserIntent = new Intent(Intent.ACTION_VIEW, Uri.parse(website));
+		DisplayResultsActivity.getDisplayContext().startActivity(browserIntent);
 	}
 	
 	public static JSONArray getPolsToDisplay() {
