@@ -1,6 +1,6 @@
 /* Scott Caruso
- * Java 1 - 1307
- * Week 4 Project
+ * Java II 1308
+ * Week 3 Assignment
  */
 package com.scottcaruso.enums;
 

@@ -1,6 +1,6 @@
 /* Scott Caruso
- * Java 1 - 1307
- * Week 4 Project
+ * Java II 1308
+ * Week 3 Assignment
  */
 package com.scottcaruso.datafunctions;
 
@@ -14,52 +14,91 @@ import android.util.Log;
 
 public class TurnStringIntoJSONObject {
 	
-	public static JSONObject createMasterObject(String response)
+	public static JSONObject createMasterObject(String response, Boolean favorites)
 	{
-		Log.i("Info","Turning the saved string into a readable JSON Object");
-		JSONObject responseObject;
-		try {
-			responseObject = new JSONObject(response);
-			JSONArray resultsArray = responseObject.getJSONArray("results");
-			if (resultsArray.length() == 0)
-			{
-				Log.i("Info","There are no results to parse.");
-				return null;
-			} else
-			{
-				JSONArray parsedPoliticians = new JSONArray();
-				for (int x = 0; x < resultsArray.length(); x++)
+		if (favorites == false)
+		{
+			Log.i("Info","Turning the saved string into a readable JSON Object");
+			JSONObject responseObject;
+			try {
+				responseObject = new JSONObject(response);
+				JSONArray resultsArray = responseObject.getJSONArray("results");
+				if (resultsArray.length() == 0)
 				{
-					JSONObject parsedPoliticianObject = new JSONObject();
-					JSONObject thisPol = resultsArray.getJSONObject(x);
-					String thisFirstName = thisPol.getString("first_name");
-					String thisLastName = thisPol.getString("last_name");
-					String thisTitle = thisPol.getString("title");
-					String fullName = thisTitle + ". " + thisFirstName + " " + thisLastName;
-					String thisID = thisPol.getString("bioguide_id");
-					String thisParty = thisPol.getString("party");
-					String thisState = thisPol.getString("state");
-					String termStarted = thisPol.getString("term_start");
-					String twitterHandle = thisPol.getString("twitter_id");
-					String thisWebsite = thisPol.getString("website");
-					parsedPoliticianObject.put("Name", fullName);
-					parsedPoliticianObject.put("ID", thisID);
-					parsedPoliticianObject.put("Party", thisParty);
-					parsedPoliticianObject.put("State", thisState);
-					parsedPoliticianObject.put("Term Start", termStarted);
-					parsedPoliticianObject.put("Twitter", twitterHandle);
-					parsedPoliticianObject.put("Website", thisWebsite);
-					parsedPoliticians.put(parsedPoliticianObject);	
+					Log.i("Info","There are no results to parse.");
+					return null;
+				} else
+				{
+					JSONArray parsedPoliticians = new JSONArray();
+					for (int x = 0; x < resultsArray.length(); x++)
+					{
+						JSONObject parsedPoliticianObject = new JSONObject();
+						JSONObject thisPol = resultsArray.getJSONObject(x);
+						String thisFirstName = thisPol.getString("first_name");
+						String thisLastName = thisPol.getString("last_name");
+						String thisTitle = thisPol.getString("title");
+						String fullName = thisTitle + ". " + thisFirstName + " " + thisLastName;
+						String thisID = thisPol.getString("bioguide_id");
+						String thisParty = thisPol.getString("party");
+						String thisState = thisPol.getString("state");
+						String termStarted = thisPol.getString("term_start");
+						String twitterHandle = thisPol.getString("twitter_id");
+						String thisWebsite = thisPol.getString("website");
+						parsedPoliticianObject.put("Name", fullName);
+						parsedPoliticianObject.put("ID", thisID);
+						parsedPoliticianObject.put("Party", thisParty);
+						parsedPoliticianObject.put("State", thisState);
+						parsedPoliticianObject.put("Term Start", termStarted);
+						parsedPoliticianObject.put("Twitter", twitterHandle);
+						parsedPoliticianObject.put("Website", thisWebsite);
+						parsedPoliticians.put(parsedPoliticianObject);	
+					}
+					Log.i("Info","Results found and ready to return.");
+					JSONObject politicians = new JSONObject().put("Politicians", parsedPoliticians);
+					return politicians;
 				}
-				Log.i("Info","Results found and ready to return.");
-				JSONObject politicians = new JSONObject().put("Politicians", parsedPoliticians);
-				return politicians;
+				
+			} catch (JSONException e) {
+				
+				e.printStackTrace();
+				return null;
 			}
-			
-		} catch (JSONException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-			return null;
+		} else
+		{
+			Log.i("Info","Turning the saved string into a readable JSON Object");
+			JSONObject responseObject;
+			try {
+				responseObject = new JSONObject(response);
+				JSONArray resultsArray = responseObject.getJSONArray("Politicians");
+				if (resultsArray.length() == 0)
+				{
+					Log.i("Info","There are no results to parse.");
+					return null;
+				} else
+				{
+					JSONArray parsedPoliticians = new JSONArray();
+					for (int x = 0; x < resultsArray.length(); x++)
+					{
+						JSONObject parsedPoliticianObject = new JSONObject();
+						JSONObject thisPol = resultsArray.getJSONObject(x);
+						parsedPoliticianObject.put("Name", thisPol.get("Name"));
+						parsedPoliticianObject.put("Party", thisPol.get("Party"));
+						parsedPoliticianObject.put("State", thisPol.get("State"));
+						parsedPoliticianObject.put("Term Start", thisPol.get("Term Start"));
+						parsedPoliticianObject.put("Twitter", thisPol.get("Twitter"));
+						parsedPoliticianObject.put("Website", thisPol.get("Website"));
+						parsedPoliticians.put(parsedPoliticianObject);	
+					}
+					Log.i("Info","Results found and ready to return.");
+					JSONObject politicians = new JSONObject().put("Politicians", parsedPoliticians);
+					return politicians;
+				}
+				
+			} catch (JSONException e) {
+				
+				e.printStackTrace();
+				return null;
+			}
 		}
 		
 	}

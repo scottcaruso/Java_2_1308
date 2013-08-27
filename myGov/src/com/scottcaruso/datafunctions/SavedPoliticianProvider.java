@@ -1,10 +1,12 @@
+/* Scott Caruso
+ * Java II 1308
+ * Week 3 Assignment
+ */
 package com.scottcaruso.datafunctions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-
-import com.scottcaruso.mygov.MainActivity;
 
 import android.content.ContentProvider;
 import android.content.ContentValues;
@@ -13,7 +15,6 @@ import android.database.Cursor;
 import android.database.MatrixCursor;
 import android.net.Uri;
 import android.provider.BaseColumns;
-import android.widget.Toast;
 
 public class SavedPoliticianProvider extends ContentProvider{
 
@@ -83,12 +84,10 @@ public class SavedPoliticianProvider extends ContentProvider{
 			String[] selectionArgs, String sortOrder) {
 		
 		MatrixCursor result = new MatrixCursor(PoliticianData.PROJECTION);
-		JSONString = SaveFavoritesLocally.getSavedPols();
+		JSONString = DataSingleton.getSavedPols();
 		if (JSONString == null)
 		{
-			Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "There are no saved politicians to view.", Toast.LENGTH_LONG);
-			toast.show();
-			return result;
+			return null;
 		}
 		JSONObject masterObject = null;
 		JSONArray polArray = null;
