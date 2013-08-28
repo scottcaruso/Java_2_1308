@@ -3,8 +3,6 @@
     android:id="@+id/main_fragment"
     android:name="com.scottcaruso.interfacefragments.MainFragment"
     android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_gravity="center_horizontal"
-    android:gravity="center" >
+    android:layout_height="wrap_content" >
 
 </fragment>
