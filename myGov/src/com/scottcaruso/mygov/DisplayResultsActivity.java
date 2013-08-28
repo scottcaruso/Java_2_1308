@@ -44,7 +44,7 @@ public class DisplayResultsActivity extends Activity {
 			}
 		}
 		setDisplayContext(DisplayResultsActivity.this);
-		this.setContentView(R.layout.politician_display);
+		this.setContentView(R.layout.resultsfrag);
 		Bundle passedData = getIntent().getExtras();
 		pols = (String) passedData.get("response");
 		favorites = (Boolean) passedData.getBoolean("favorites");
