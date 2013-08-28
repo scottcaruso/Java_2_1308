@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <typeInfoHistroy>
-<typeInfo handle="=myGov/src&lt;com.scottcaruso.datafunctions{DataRetrievalService.java[DataRetrievalService" modifiers="1" timestamp="1377189959000"/>
-<typeInfo handle="=myGov/src&lt;com.scottcaruso.datafunctions{SavedPoliticianProvider.java[SavedPoliticianProvider" modifiers="1" timestamp="1377190192000"/>
+<typeInfo handle="=myGov/src&lt;com.scottcaruso.datafunctions{DataRetrievalService.java[DataRetrievalService" modifiers="1" timestamp="1377564624000"/>
+<typeInfo handle="=myGov/src&lt;com.scottcaruso.datafunctions{SavedPoliticianProvider.java[SavedPoliticianProvider" modifiers="1" timestamp="1377564624000"/>
+<typeInfo handle="=myGov/\/Applications\/adt-bundle-mac-x86_64-20130522\/sdk\/platforms\/android-17\/android.jar&lt;android.app(Fragment.class[Fragment" modifiers="33" timestamp="1360756462000"/>
 </typeInfoHistroy>
