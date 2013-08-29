@@ -11,6 +11,7 @@ import org.json.JSONObject;
 import com.scottcaruso.datafunctions.DataRetrievalService;
 import com.scottcaruso.datafunctions.SavedPoliticianProvider;
 import com.scottcaruso.datafunctions.SavedPoliticianProvider.PoliticianData;
+import com.scottcaruso.interfacefragments.MainFragment.MainListener;
 import com.scottcaruso.interfacefunctions.DisplayPoliticianResults;
 import com.scottcaruso.utilities.Connection_Verification;
 
@@ -33,7 +34,7 @@ import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
 
-public class MainActivity extends Activity {
+public class MainActivity extends Activity implements MainListener {
 	
 	static Context currentContext;
 	public static JSONObject jsonResponse;
@@ -53,29 +54,14 @@ public class MainActivity extends Activity {
        	DisplayPoliticianResults.setViewingDisplay(false);
         
         this.setContentView(R.layout.mainfrag);
+        Log.i("Info","Created Main Menu elements based on XML files.");
         
         //Allows the context to be passed across classes.
         setCurrentContext(MainActivity.this);
         
         //Create interface elements from the XML files
-        final EditText zipEntry = (EditText) findViewById(R.id.zipcodeentry);
-        final Button searchForPolsButton = (Button) findViewById(R.id.dosearchnow);
         queryChoice = (Spinner) findViewById(R.id.spinner1);
         final Button queryButton = (Button) findViewById(R.id.partyquery);
-        
-        Log.i("Info","Created Main Menu elements based on XML files.");
-        
-        searchForPolsButton.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				//Build the onClick method, Handler, Intent, etc. See the method below!
-				buildClicker(zipEntry);
-				InputMethodManager imm = (InputMethodManager)getSystemService(Context.INPUT_METHOD_SERVICE);
-				imm.hideSoftInputFromWindow(searchForPolsButton.getWindowToken(), 0);
-				Log.i("Info","Hiding the keyboard");
-			}
-		});
         
         //Click this button to retrieve politicians saved to local storage.
         final Button retrieveSavedPols = (Button) findViewById(R.id.retrievefavorites);
@@ -263,6 +249,11 @@ public class MainActivity extends Activity {
 			Toast toast = Toast.makeText(MainActivity.getCurrentContext(), "There are no saved politicians to view.", Toast.LENGTH_LONG);
 			toast.show();
 		}
+	}
+
+	@Override
+	public void onPolsSearch(EditText zipEntry) {
+		buildClicker(zipEntry);
 	}
     
 }

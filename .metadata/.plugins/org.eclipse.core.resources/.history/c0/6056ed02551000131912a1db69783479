@@ -1,0 +1,97 @@
+package com.scottcaruso.interfacefragments;
+
+import com.scottcaruso.datafunctions.SavedPoliticianProvider.PoliticianData;
+import com.scottcaruso.mygov.MainActivity;
+import com.scottcaruso.mygov.R;
+
+import android.app.Fragment;
+import android.content.Context;
+import android.database.Cursor;
+import android.net.Uri;
+import android.os.Bundle;
+import android.util.Log;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.Toast;
+
+public class MainFragment extends Fragment {
+	
+	static Spinner queryChoice;
+	public static Cursor thisCursor;
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	{
+		super.onCreateView(inflater, container, savedInstanceState);
+		LinearLayout view = (LinearLayout) inflater.inflate(R.layout.main_screen, container);
+
+		 //Create interface elements from the XML files
+        final EditText zipEntry = (EditText) getActivity().findViewById(R.id.zipcodeentry);
+        queryChoice = (Spinner) getActivity().findViewById(R.id.spinner1);
+        final Button searchForPolsButton = (Button) getActivity().findViewById(R.id.dosearchnow);
+        final Button queryButton = (Button) getActivity().findViewById(R.id.partyquery);
+        
+        Log.i("Info","Created Main Menu elements based on XML files.");
+        
+        searchForPolsButton.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				//Build the onClick method, Handler, Intent, etc. See the method below!
+				MainActivity.buildClicker(zipEntry);
+				InputMethodManager imm = (InputMethodManager)getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+				imm.hideSoftInputFromWindow(searchForPolsButton.getWindowToken(), 0);
+				Log.i("Info","Hiding the keyboard");
+			}
+		});
+        
+        //Click this button to retrieve politicians saved to local storage.
+        final Button retrieveSavedPols = (Button) getActivity().findViewById(R.id.retrievefavorites);
+        retrieveSavedPols.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				//String savedData; //This has been commented out because it is only used when accessing data directly.
+				Log.i("Info","Fetching ALL data via URI.");
+				Uri uri = PoliticianData.CONTENT_URI;
+				thisCursor = getActivity().getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
+				MainActivity.turnCursorIntoDisplay(thisCursor);
+				}
+			});
+	        
+	        //Handle a spinner click
+	        queryButton.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+				Log.i("Info","Query clicked");
+				if (queryChoice.getSelectedItem().toString().equals("Republicans"))
+				{
+					Log.i("Info","Fetching Republicans via URI");
+					Uri uri = PoliticianData.REPUBLICAN_URI;
+					thisCursor = getActivity().getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
+					MainActivity.turnCursorIntoDisplay(thisCursor);
+				} else if (queryChoice.getSelectedItem().toString().equals("Democrats"))
+				{
+					Log.i("Info","Fetching Democrats via URI");
+					Uri uri = PoliticianData.DEMOCRAT_URI;
+					thisCursor = getActivity().getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
+					MainActivity.turnCursorIntoDisplay(thisCursor);
+			} else
+			{
+				Toast toast = Toast.makeText(getActivity(), "There was an error making this query.", Toast.LENGTH_LONG);
+				toast.show();
+			}
+				
+			}
+		});
+	return view;        
+	}
+
+}
