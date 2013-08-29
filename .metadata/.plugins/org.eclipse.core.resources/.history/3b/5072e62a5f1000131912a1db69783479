@@ -1,6 +1,7 @@
 package com.scottcaruso.interfacefragments;
 
 import com.scottcaruso.datafunctions.SavedPoliticianProvider.PoliticianData;
+import com.scottcaruso.mygov.MainActivity;
 import com.scottcaruso.mygov.R;
 
 import android.app.Activity;

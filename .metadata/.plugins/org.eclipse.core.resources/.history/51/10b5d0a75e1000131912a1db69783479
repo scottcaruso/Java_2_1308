@@ -58,7 +58,37 @@ public class MainActivity extends Activity implements MainListener {
         
         //Allows the context to be passed across classes.
         setCurrentContext(MainActivity.this);
-
+        
+        //Create interface elements from the XML files
+        queryChoice = (Spinner) findViewById(R.id.spinner1);
+        final Button queryButton = (Button) findViewById(R.id.partyquery);
+	        
+	        //Handle a spinner click
+	        queryButton.setOnClickListener(new View.OnClickListener() {
+				
+				@Override
+				public void onClick(View v) {
+				Log.i("Info","Query clicked");
+				if (queryChoice.getSelectedItem().toString().equals("Republicans"))
+				{
+					Log.i("Info","Fetching Republicans via URI");
+					Uri uri = PoliticianData.REPUBLICAN_URI;
+					thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
+					turnCursorIntoDisplay(thisCursor);
+				} else if (queryChoice.getSelectedItem().toString().equals("Democrats"))
+				{
+					Log.i("Info","Fetching Democrats via URI");
+					Uri uri = PoliticianData.DEMOCRAT_URI;
+					thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
+					turnCursorIntoDisplay(thisCursor);
+			} else
+			{
+				Toast toast = Toast.makeText(MainActivity.this, "There was an error making this query.", Toast.LENGTH_LONG);
+				toast.show();
+			}
+				
+			}
+		});
     }
     
     @Override

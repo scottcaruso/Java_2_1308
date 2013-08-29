@@ -17,8 +17,6 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.LinearLayout;
-import android.widget.Spinner;
-import android.widget.Toast;
 
 public class MainFragment extends Fragment {
 
@@ -63,37 +61,6 @@ public class MainFragment extends Fragment {
 				listener.getSavedPols(thisCursor);
 				}
 			});
-        
-        //Create interface elements from the XML files
-        final Spinner queryChoice = (Spinner) view.findViewById(R.id.spinner1);
-        final Button queryButton = (Button) view.findViewById(R.id.partyquery);
-	        
-	        //Handle a spinner click
-	        queryButton.setOnClickListener(new View.OnClickListener() {
-				
-				@Override
-				public void onClick(View v) {
-				Log.i("Info","Query clicked");
-				if (queryChoice.getSelectedItem().toString().equals("Republicans"))
-				{
-					Log.i("Info","Fetching Republicans via URI");
-					Uri uri = PoliticianData.REPUBLICAN_URI;
-					Cursor thisCursor = getActivity().getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
-					listener.getSavedPols(thisCursor);
-				} else if (queryChoice.getSelectedItem().toString().equals("Democrats"))
-				{
-					Log.i("Info","Fetching Democrats via URI");
-					Uri uri = PoliticianData.DEMOCRAT_URI;
-					Cursor thisCursor = getActivity().getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
-					listener.getSavedPols(thisCursor);
-				} else
-				{
-					Toast toast = Toast.makeText(getActivity(), "There was an error making this query.", Toast.LENGTH_LONG);
-					toast.show();
-				}
-				
-			}
-		});
 		 
 		return view;
 	};

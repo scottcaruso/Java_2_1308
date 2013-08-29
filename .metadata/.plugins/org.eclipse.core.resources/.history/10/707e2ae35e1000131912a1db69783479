@@ -1,6 +1,7 @@
 package com.scottcaruso.interfacefragments;
 
 import com.scottcaruso.datafunctions.SavedPoliticianProvider.PoliticianData;
+import com.scottcaruso.mygov.MainActivity;
 import com.scottcaruso.mygov.R;
 
 import android.app.Activity;
@@ -65,7 +66,7 @@ public class MainFragment extends Fragment {
 			});
         
         //Create interface elements from the XML files
-        final Spinner queryChoice = (Spinner) view.findViewById(R.id.spinner1);
+        Spinner queryChoice = (Spinner) view.findViewById(R.id.spinner1);
         final Button queryButton = (Button) view.findViewById(R.id.partyquery);
 	        
 	        //Handle a spinner click
@@ -78,19 +79,19 @@ public class MainFragment extends Fragment {
 				{
 					Log.i("Info","Fetching Republicans via URI");
 					Uri uri = PoliticianData.REPUBLICAN_URI;
-					Cursor thisCursor = getActivity().getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
-					listener.getSavedPols(thisCursor);
+					Cursor thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
+					listener.getSavedPols(thisCursor)l
 				} else if (queryChoice.getSelectedItem().toString().equals("Democrats"))
 				{
 					Log.i("Info","Fetching Democrats via URI");
 					Uri uri = PoliticianData.DEMOCRAT_URI;
-					Cursor thisCursor = getActivity().getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
-					listener.getSavedPols(thisCursor);
-				} else
-				{
-					Toast toast = Toast.makeText(getActivity(), "There was an error making this query.", Toast.LENGTH_LONG);
-					toast.show();
-				}
+					thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
+					turnCursorIntoDisplay(thisCursor);
+			} else
+			{
+				Toast toast = Toast.makeText(MainActivity.this, "There was an error making this query.", Toast.LENGTH_LONG);
+				toast.show();
+			}
 				
 			}
 		});

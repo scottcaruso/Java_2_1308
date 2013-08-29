@@ -1,6 +1,7 @@
 package com.scottcaruso.interfacefragments;
 
 import com.scottcaruso.datafunctions.SavedPoliticianProvider.PoliticianData;
+import com.scottcaruso.mygov.MainActivity;
 import com.scottcaruso.mygov.R;
 
 import android.app.Activity;
@@ -86,11 +87,11 @@ public class MainFragment extends Fragment {
 					Uri uri = PoliticianData.DEMOCRAT_URI;
 					Cursor thisCursor = getActivity().getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
 					listener.getSavedPols(thisCursor);
-				} else
-				{
-					Toast toast = Toast.makeText(getActivity(), "There was an error making this query.", Toast.LENGTH_LONG);
-					toast.show();
-				}
+			} else
+			{
+				Toast toast = Toast.makeText(MainActivity.this, "There was an error making this query.", Toast.LENGTH_LONG);
+				toast.show();
+			}
 				
 			}
 		});
