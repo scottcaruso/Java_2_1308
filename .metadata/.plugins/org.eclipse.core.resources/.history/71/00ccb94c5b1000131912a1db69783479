@@ -58,7 +58,7 @@ public class MainFragment extends Fragment {
 				Log.i("Info","Fetching ALL data via URI.");
 				Uri uri = PoliticianData.CONTENT_URI;
 				Cursor thisCursor = getActivity().getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
-				listener.getSavedPols(thisCursor);
+				turnCursorIntoDisplay(thisCursor);
 				}
 			});
 		 

@@ -62,6 +62,20 @@ public class MainActivity extends Activity implements MainListener {
         //Create interface elements from the XML files
         queryChoice = (Spinner) findViewById(R.id.spinner1);
         final Button queryButton = (Button) findViewById(R.id.partyquery);
+        
+        //Click this button to retrieve politicians saved to local storage.
+        final Button retrieveSavedPols = (Button) findViewById(R.id.retrievefavorites);
+        retrieveSavedPols.setOnClickListener(new View.OnClickListener() {
+			
+			@Override
+			public void onClick(View v) {
+				//String savedData; //This has been commented out because it is only used when accessing data directly.
+				Log.i("Info","Fetching ALL data via URI.");
+				Uri uri = PoliticianData.CONTENT_URI;
+				thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
+				turnCursorIntoDisplay(thisCursor);
+				}
+			});
 	        
 	        //Handle a spinner click
 	        queryButton.setOnClickListener(new View.OnClickListener() {
@@ -240,11 +254,6 @@ public class MainActivity extends Activity implements MainListener {
 	@Override
 	public void onPolsSearch(EditText zipEntry) {
 		buildClicker(zipEntry);
-	}
-
-	@Override
-	public void getSavedPols(Cursor cursor) {
-		turnCursorIntoDisplay(cursor);
 	}
     
 }

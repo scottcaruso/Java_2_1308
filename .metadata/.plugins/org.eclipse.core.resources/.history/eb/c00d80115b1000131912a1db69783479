@@ -1,13 +1,10 @@
 package com.scottcaruso.interfacefragments;
 
-import com.scottcaruso.datafunctions.SavedPoliticianProvider.PoliticianData;
 import com.scottcaruso.mygov.R;
 
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.database.Cursor;
-import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,7 +22,6 @@ public class MainFragment extends Fragment {
 	public interface MainListener
 	{
 		public void onPolsSearch(EditText zipEntry);
-		public void getSavedPols(Cursor cursor);
 	}
 	
 	@Override
@@ -45,20 +41,6 @@ public class MainFragment extends Fragment {
 					InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
 					imm.hideSoftInputFromWindow(searchForPolsButton.getWindowToken(), 0);
 					Log.i("Info","Hiding the keyboard");
-				}
-			});
-		
-        //Click this button to retrieve politicians saved to local storage.
-        final Button retrieveSavedPols = (Button) view.findViewById(R.id.retrievefavorites);
-        retrieveSavedPols.setOnClickListener(new View.OnClickListener() {
-			
-			@Override
-			public void onClick(View v) {
-				//String savedData; //This has been commented out because it is only used when accessing data directly.
-				Log.i("Info","Fetching ALL data via URI.");
-				Uri uri = PoliticianData.CONTENT_URI;
-				Cursor thisCursor = getActivity().getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
-				listener.getSavedPols(thisCursor);
 				}
 			});
 		 

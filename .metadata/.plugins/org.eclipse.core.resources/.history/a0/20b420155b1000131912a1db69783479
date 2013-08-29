@@ -6,7 +6,6 @@ import com.scottcaruso.mygov.R;
 import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
-import android.database.Cursor;
 import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,7 +24,6 @@ public class MainFragment extends Fragment {
 	public interface MainListener
 	{
 		public void onPolsSearch(EditText zipEntry);
-		public void getSavedPols(Cursor cursor);
 	}
 	
 	@Override
@@ -49,7 +47,7 @@ public class MainFragment extends Fragment {
 			});
 		
         //Click this button to retrieve politicians saved to local storage.
-        final Button retrieveSavedPols = (Button) view.findViewById(R.id.retrievefavorites);
+        final Button retrieveSavedPols = (Button) findViewById(R.id.retrievefavorites);
         retrieveSavedPols.setOnClickListener(new View.OnClickListener() {
 			
 			@Override
@@ -57,8 +55,8 @@ public class MainFragment extends Fragment {
 				//String savedData; //This has been commented out because it is only used when accessing data directly.
 				Log.i("Info","Fetching ALL data via URI.");
 				Uri uri = PoliticianData.CONTENT_URI;
-				Cursor thisCursor = getActivity().getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
-				listener.getSavedPols(thisCursor);
+				thisCursor = getContentResolver().query(uri, PoliticianData.PROJECTION, null, null, null);
+				turnCursorIntoDisplay(thisCursor);
 				}
 			});
 		 
