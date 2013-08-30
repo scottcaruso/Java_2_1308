@@ -7,6 +7,7 @@ package com.scottcaruso.mygov;
 import org.json.JSONObject;
 
 import com.scottcaruso.datafunctions.TurnStringIntoJSONObject;
+import com.scottcaruso.interfacefragments.DisplayResultsFragment.ResultsListener;
 import com.scottcaruso.interfacefunctions.DisplayPoliticianResults;
 
 import android.app.Activity;
@@ -16,7 +17,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.Spinner;
 
-public class DisplayResultsActivity extends Activity {
+public class DisplayResultsActivity extends Activity implements ResultsListener {
 	
 	String pols;
 	Boolean favorites;
@@ -45,11 +46,6 @@ public class DisplayResultsActivity extends Activity {
 		}
 		setDisplayContext(DisplayResultsActivity.this);
 		this.setContentView(R.layout.resultsfrag);
-		Bundle passedData = getIntent().getExtras();
-		pols = (String) passedData.get("response");
-		favorites = (Boolean) passedData.getBoolean("favorites");
-		JSONObject responseObject = TurnStringIntoJSONObject.createMasterObject(pols,favorites);
-		DisplayPoliticianResults.showPoliticiansInDisplay(responseObject, favorites);
 	}
 	
 	@Override
@@ -75,5 +71,11 @@ public class DisplayResultsActivity extends Activity {
 
 	public static void setDisplayContext(Context displayContext) {
 		DisplayResultsActivity.displayContext = displayContext;
+	}
+
+	@Override
+	public void createDisplay(JSONObject response, Boolean favorites) 
+	{
+		DisplayPoliticianResults.showPoliticiansInDisplay(response, favorites);	
 	}
 }

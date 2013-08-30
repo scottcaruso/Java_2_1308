@@ -1,0 +1,34 @@
+package com.scottcaruso.interfacefragments;
+
+import com.scottcaruso.mygov.R;
+
+import android.app.Fragment;
+import android.os.Bundle;
+import android.view.LayoutInflater;
+import android.view.View;
+import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.LinearLayout;
+import android.widget.Spinner;
+import android.widget.TextView;
+
+public class DisplayResultsFragment extends Fragment {
+
+	@Override
+	public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState)
+	{
+		super.onCreateView(inflater, container, savedInstanceState);
+		LinearLayout view = (LinearLayout) inflater.inflate(R.layout.politician_display, container);
+		
+		//Assigns the elements used in the view.
+		final Spinner polName = (Spinner) a.findViewById(com.scottcaruso.mygov.R.id.politicianName);
+		TextView polParty = (TextView) a.findViewById(com.scottcaruso.mygov.R.id.partytext);
+		polState = (TextView) a.findViewById(com.scottcaruso.mygov.R.id.statetext);
+		polTerm = (TextView) a.findViewById(com.scottcaruso.mygov.R.id.termText);
+		polTwitter = (TextView) a.findViewById(com.scottcaruso.mygov.R.id.twitterText);
+		polWebsite = (Button) a.findViewById(com.scottcaruso.mygov.R.id.websiteText);
+		
+		
+		return view;
+	}
+}
