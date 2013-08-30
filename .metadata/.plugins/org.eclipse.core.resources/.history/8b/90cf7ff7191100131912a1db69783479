@@ -3,14 +3,19 @@ package com.scottcaruso.interfacefragments;
 import org.json.JSONObject;
 
 import com.scottcaruso.datafunctions.TurnStringIntoJSONObject;
+import com.scottcaruso.interfacefragments.MainFragment.MainListener;
 import com.scottcaruso.interfacefunctions.DisplayPoliticianResults;
+import com.scottcaruso.mygov.DisplayResultsActivity;
 import com.scottcaruso.mygov.R;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 public class DisplayResultsFragment extends Fragment {

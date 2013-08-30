@@ -4,6 +4,10 @@
  */
 package com.scottcaruso.mygov;
 
+import org.json.JSONObject;
+
+import com.scottcaruso.datafunctions.TurnStringIntoJSONObject;
+import com.scottcaruso.interfacefunctions.DisplayPoliticianResults;
 
 import android.app.Activity;
 import android.content.Context;

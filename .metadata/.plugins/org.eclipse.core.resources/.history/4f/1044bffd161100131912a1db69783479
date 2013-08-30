@@ -3,14 +3,19 @@ package com.scottcaruso.interfacefragments;
 import org.json.JSONObject;
 
 import com.scottcaruso.datafunctions.TurnStringIntoJSONObject;
+import com.scottcaruso.interfacefragments.MainFragment.MainListener;
 import com.scottcaruso.interfacefunctions.DisplayPoliticianResults;
+import com.scottcaruso.mygov.DisplayResultsActivity;
 import com.scottcaruso.mygov.R;
 
+import android.app.Activity;
 import android.app.Fragment;
+import android.database.Cursor;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 import android.widget.LinearLayout;
 
 public class DisplayResultsFragment extends Fragment {
@@ -18,7 +23,13 @@ public class DisplayResultsFragment extends Fragment {
 	String pols;
 	Boolean favorites;
 	JSONObject responseObject;
-
+	
+	private ResultsListener listener;
+	
+	public interface ResultsListener
+	{
+		
+	}
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState)
@@ -42,7 +53,6 @@ public class DisplayResultsFragment extends Fragment {
 	public void onActivityCreated(Bundle savedInstanceState)
 	{
 		super.onActivityCreated(savedInstanceState);
-		//There is some moderately sophisticated but highly volatile code (particularly around the spinner) that has always been housed in this separate "Display Politician Results" class that I created. I felt that it would be counter-intuitive to the project to break this apart for relatively minimal gain, therefore it remains and is simply called by the fragment.
 		DisplayPoliticianResults.showPoliticiansInDisplay(responseObject, favorites);
 	}
 	
