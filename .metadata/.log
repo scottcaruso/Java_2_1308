@@ -1407,3 +1407,6 @@ org.eclipse.debug.core.DebugException: VM does not support access watchpoints.
 	at org.eclipse.core.internal.jobs.Worker.run(Worker.java:53)
 !SUBENTRY 1 org.eclipse.debug.core 4 5011 2013-08-29 21:29:05.917
 !MESSAGE VM does not support access watchpoints.
+
+!ENTRY com.android.ide.eclipse.adt 4 0 2013-08-31 01:08:09.819
+!MESSAGE politician_display_landscape.xml: Resouce id 0x1010081 is not of type STYLE (instead attr)
